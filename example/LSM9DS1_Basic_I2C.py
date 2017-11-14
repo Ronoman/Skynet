@@ -3,6 +3,8 @@
 
 #import ctypes
 from ctypes import *
+import time
+import socket
 
 path = "../lib/liblsm9ds1cwrapper.so"
 lib = cdll.LoadLibrary(path)
@@ -58,6 +60,12 @@ lib.lsm9ds1_calcAccel.restype = c_float
 lib.lsm9ds1_calcMag.argtypes = [c_void_p, c_float]
 lib.lsm9ds1_calcMag.restype = c_float
 
+UDP_IP = "10.76.6.81"
+UDP_PORT = 1001
+
+sock = socket.socket(socket.AF_INET, # Internet
+             socket.SOCK_DGRAM) # UDP
+
 if __name__ == "__main__":
     imu = lib.lsm9ds1_create()
     lib.lsm9ds1_begin(imu)
@@ -104,3 +112,6 @@ if __name__ == "__main__":
         print("Gyro: %f, %f, %f [deg/s]" % (cgx, cgy, cgz))
         print("Accel: %f, %f, %f [Gs]" % (cax, cay, caz))
         print("Mag: %f, %f, %f [gauss]" % (cmx, cmy, cmz))
+		
+		gyro = b"%d,%f,%f,%f" % (int(round(time.time()*1000)), cgx, cgy, cgz)
+		sock.sendto(gyro, (UDP_IP, UDP_PORT))
