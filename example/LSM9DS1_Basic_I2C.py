@@ -60,7 +60,7 @@ lib.lsm9ds1_calcAccel.restype = c_float
 lib.lsm9ds1_calcMag.argtypes = [c_void_p, c_float]
 lib.lsm9ds1_calcMag.restype = c_float
 
-UDP_IP = "10.76.6.81"
+UDP_IP = "10.76.6.11"
 UDP_PORT = 1001
 
 sock = socket.socket(socket.AF_INET, # Internet
