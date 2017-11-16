@@ -108,10 +108,6 @@ if __name__ == "__main__":
         cmx = lib.lsm9ds1_calcMag(imu, mx)
         cmy = lib.lsm9ds1_calcMag(imu, my)
         cmz = lib.lsm9ds1_calcMag(imu, mz)
-
-        print("Gyro: %f, %f, %f [deg/s]" % (cgx, cgy, cgz))
-        print("Accel: %f, %f, %f [Gs]" % (cax, cay, caz))
-        print("Mag: %f, %f, %f [gauss]" % (cmx, cmy, cmz))
-		
-		gyro = b"%d,%f,%f,%f" % (int(round(time.time()*1000)), cgx, cgy, cgz)
-		sock.sendto(gyro, (UDP_IP, UDP_PORT))
+        
+        gyro = b"%d,%f,%f,%f" % (int(round(time.time()*1000)), cgx, cgy, cgz)
+        sock.sendto(gyro, (UDP_IP, UDP_PORT))
