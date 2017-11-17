@@ -110,10 +110,5 @@ if __name__ == "__main__":
         cmx = lib.lsm9ds1_calcMag(imu, mx)
         cmy = lib.lsm9ds1_calcMag(imu, my)
         cmz = lib.lsm9ds1_calcMag(imu, mz)
-
         gyro = b"%d,%f,%f,%f" % (int(round(time.time()*1000)), cgx, cgy, cgz)
-        if(len(gyro) > max):
-            max = len(gyro)
-            print(max)
         sock.sendto(gyro, (UDP_IP, UDP_PORT))
-        time.sleep(0.01)

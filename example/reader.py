@@ -6,4 +6,4 @@ with open("output.csv", "w+") as out:
 	while True:
 		print("listening")
 		message, address = sock.recvfrom(1024)
-		out.write(message.decode("utf-8"))
+		out.write(message.decode("utf-8") + "\n")
