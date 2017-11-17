@@ -5,6 +5,42 @@
 from ctypes import *
 import time
 import socket
+from threading import Thread
+
+class Data():
+	def __init__(self):
+		self.dx = [0, 0]
+		self.dy = [0, 0]
+		self.dz = [0, 0]
+		
+		self.x = [0, 0]
+		self.y = [0, 0]
+		self.z = [0, 0]
+		
+		self.ts = []
+	
+	def update(dx, dy, dz, ts):
+		self.dx += [dx]
+		self.dx = dx[-100:]
+		self.dy += [dy]
+		self.dy = dy[-100:]
+		self.dz += [dz]
+		self.dz = dz[-100:]
+		
+		self.ts += [ts]
+		self.ts = ts[-100:]
+		
+		self.x += [x[-1] + (self.dx[-1]*(self.x[-1]-self.x[-2])/1000)]
+		self.x = self.x[-100:]
+		self.y += [y[-1] + (self.dy[-1]*(self.y[-1]-self.y[-2])/1000)]
+		self.y = self.y[-100:]
+		self.z += [z[-1] + (self.dz[-1]*(self.z[-1]-self.z[-2])/1000)]
+		self.z = self.z[-100:]
+	
+	def send(self, sock):
+		while True:
+			sock.send(str(ts[-1]) + "," + str(self.x[-1]) + "," + str(self.y[-1]) + "," + str(self.z[-1]))
+			time.sleep(0.05)
 
 path = "../lib/liblsm9ds1cwrapper.so"
 lib = cdll.LoadLibrary(path)
@@ -66,7 +102,9 @@ UDP_PORT = 1001
 sock = socket.socket(socket.AF_INET, # Internet
              socket.SOCK_DGRAM) # UDP
 
-max = 0
+data = Data()
+netThread = Thread(target=data.send, args=(sock))
+netThread.start()
 
 if __name__ == "__main__":
     imu = lib.lsm9ds1_create()
@@ -110,5 +148,6 @@ if __name__ == "__main__":
         cmx = lib.lsm9ds1_calcMag(imu, mx)
         cmy = lib.lsm9ds1_calcMag(imu, my)
         cmz = lib.lsm9ds1_calcMag(imu, mz)
-        gyro = b"%d,%f,%f,%f" % (int(round(time.time()*1000)), cgx, cgy, cgz)
-        sock.sendto(gyro, (UDP_IP, UDP_PORT))
+		data.update(int(round(time.time()*1000)), cgx, cgy, cgz)
+        #gyro = b"%d,%f,%f,%f" % (int(round(time.time()*1000)), cgx, cgy, cgz)
+        #sock.sendto(gyro, (UDP_IP, UDP_PORT))

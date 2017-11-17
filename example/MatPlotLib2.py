@@ -24,9 +24,9 @@ pz = [0]
 #=E2+(B2*(A3-A2)/1000)
 first = True
 
-dxPlot, = plt.plot(x, px)
-dyPlot, = plt.plot(x, py)
-dzPlot, = plt.plot(x, pz)
+dxPlot, = plt.plot(x, dx)
+dyPlot, = plt.plot(x, dy)
+dzPlot, = plt.plot(x, dz)
 
 plt.ion()
 plt.show()
@@ -72,9 +72,9 @@ while True:
     dyPlot.set_xdata(x)
     dzPlot.set_xdata(x)
 
-    dxPlot.set_ydata(px)
-    dyPlot.set_ydata(py)
-    dzPlot.set_ydata(pz)
+    dxPlot.set_ydata(dx)
+    dyPlot.set_ydata(dy)
+    dzPlot.set_ydata(dz)
 
     axes.set_xlim([x[0],message[0]])
 
