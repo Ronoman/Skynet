@@ -8,55 +8,78 @@ import socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind(("", 1001))
 
-message, address = sock.recvfrom(1024)
+message, address = sock.recvfrom(64)
 message = message.decode("utf-8")
 message = message.split(',')
 message = [float(x) for x in message]
 
 x = [message[0]]
-y1 = [message[1]]
-y2 = [message[2]]
-y3 = [message[3]]
+dx = [message[1]]
+dy = [message[2]]
+dz = [message[3]]
 
-y1Plot, = plt.plot(x, y1)
-y2Plot, = plt.plot(x, y2)
-y3Plot, = plt.plot(x, y3)
+px = [0]
+py = [0]
+pz = [0]
+#=E2+(B2*(A3-A2)/1000)
+first = True
+
+dxPlot, = plt.plot(x, px)
+dyPlot, = plt.plot(x, py)
+dzPlot, = plt.plot(x, pz)
 
 plt.ion()
 plt.show()
 axes = plt.gca()
-axes.set_ylim([-300,300])
+axes.set_ylim([-360,360])
 
 # i=0
 i = message[0]
 start = time.time()
-while (message[0]-i)<10000:
+while True:
     # i += 1
-    message, address = sock.recvfrom(1024)
+    message, address = sock.recvfrom(64)
     message = message.decode("utf-8")
     message = message.split(',')
 
     message = [float(x) for x in message]
 
-    # print("datapoint: ",(message[0]-i)/1000)
+    x = x + [message[0]]
+    dx = dx + [message[1]]
+    dy = dy + [message[2]]
+    dz = dz + [message[3]]
+    
+    if not first:
+        px.append(px[-1] + (dx[-1]*(x[-1]-x[-2])/1000))
+        py.append(py[-1] + (dy[-1]*(x[-1]-x[-2])/1000))
+        pz.append(pz[-1] + (dz[-1]*(x[-1]-x[-2])/1000))
+    else:
+        px.append(0)
+        py.append(0)
+        pz.append(0)
+        
+    first = False
+    x = x[-100:]
+    dx = dx[-100:]
+    dy = dy[-100:]
+    dz = dz[-100:]
+    
+    px = px[-100:]
+    py = py[-100:]
+    pz = pz[-100:]
 
-    x = np.append(x, message[0])
-    y1 = np.append(y1, message[1])
-    y2 = np.append(y2, message[2])
-    y3 = np.append(y3, message[3])
+    dxPlot.set_xdata(x)
+    dyPlot.set_xdata(x)
+    dzPlot.set_xdata(x)
 
-    y1Plot.set_xdata(x)
-    y2Plot.set_xdata(x)
-    y3Plot.set_xdata(x)
-
-    y1Plot.set_ydata(y1)
-    y2Plot.set_ydata(y2)
-    y3Plot.set_ydata(y3)
+    dxPlot.set_ydata(px)
+    dyPlot.set_ydata(py)
+    dzPlot.set_ydata(pz)
 
     axes.set_xlim([x[0],message[0]])
 
     plt.draw()
-    plt.pause(0.001)
+    plt.pause(0.0001)
 
 finish = time.time()
 print("Data Time Elapsed: ",(message[0]-i)/1000, "seconds")
