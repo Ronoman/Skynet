@@ -20,22 +20,22 @@ class Data():
 
 		self.ts = []
 
-	def update(dx, dy, dz, ts):
+	def update(self, dx, dy, dz, ts):
 		self.dx += [dx]
-		self.dx = dx[-100:]
+		self.dx = self.dx[-100:]
 		self.dy += [dy]
-		self.dy = dy[-100:]
+		self.dy = self.dy[-100:]
 		self.dz += [dz]
-		self.dz = dz[-100:]
+		self.dz = self.dz[-100:]
 
 		self.ts += [ts]
-		self.ts = ts[-100:]
+		self.ts = self.ts[-100:]
 
-		self.x += [x[-1] + (self.dx[-1]*(self.x[-1]-self.x[-2])/1000)]
+		self.x += [self.x[-1] + (self.dx[-1]*(self.x[-1]-self.x[-2])/1000)]
 		self.x = self.x[-100:]
-		self.y += [y[-1] + (self.dy[-1]*(self.y[-1]-self.y[-2])/1000)]
+		self.y += [self.y[-1] + (self.dy[-1]*(self.y[-1]-self.y[-2])/1000)]
 		self.y = self.y[-100:]
-		self.z += [z[-1] + (self.dz[-1]*(self.z[-1]-self.z[-2])/1000)]
+		self.z += [self.z[-1] + (self.dz[-1]*(self.z[-1]-self.z[-2])/1000)]
 		self.z = self.z[-100:]
 
 		# print("timestamp: ",[self.ts[-1]])
@@ -153,7 +153,7 @@ if __name__ == "__main__":
         cmx = lib.lsm9ds1_calcMag(imu, mx)
         cmy = lib.lsm9ds1_calcMag(imu, my)
         cmz = lib.lsm9ds1_calcMag(imu, mz)
-		data.update(int(round(time.time()*1000)), cgx, cgy, cgz)
-		data.send(sock)
+        data.update(int(round(time.time()*1000)), cgx, cgy, cgz)
+        data.send(sock)
         #gyro = b"%d,%f,%f,%f" % (int(round(time.time()*1000)), cgx, cgy, cgz)
         #sock.sendto(gyro, (UDP_IP, UDP_PORT))
