@@ -13,20 +13,16 @@ message = message.decode("utf-8")
 message = message.split(',')
 message = [float(x) for x in message]
 
-x = [message[0]]
-dx = [message[1]]
-dy = [message[2]]
-dz = [message[3]]
-
-px = [0]
-py = [0]
-pz = [0]
+ts = [message[0]]
+x = [message[1]]
+y = [message[2]]
+z = [message[3]]
 #=E2+(B2*(A3-A2)/1000)
 first = True
 
-dxPlot, = plt.plot(x, dx)
-dyPlot, = plt.plot(x, dy)
-dzPlot, = plt.plot(x, dz)
+dxPlot, = plt.plot(ts, x)
+dyPlot, = plt.plot(ts, y)
+dzPlot, = plt.plot(ts, z)
 
 plt.ion()
 plt.show()
@@ -38,45 +34,32 @@ i = message[0]
 start = time.time()
 while True:
     # i += 1
-    message, address = sock.recvfrom(64)
+    message, address = sock.recvfrom(1024)
     message = message.decode("utf-8")
     message = message.split(',')
 
     message = [float(x) for x in message]
 
-    x = x + [message[0]]
-    dx = dx + [message[1]]
-    dy = dy + [message[2]]
-    dz = dz + [message[3]]
-    
-    if not first:
-        px.append(px[-1] + (dx[-1]*(x[-1]-x[-2])/1000))
-        py.append(py[-1] + (dy[-1]*(x[-1]-x[-2])/1000))
-        pz.append(pz[-1] + (dz[-1]*(x[-1]-x[-2])/1000))
-    else:
-        px.append(0)
-        py.append(0)
-        pz.append(0)
+    ts = ts + [message[0]]
+    x = x + [message[1]]
+    y = y + [message[2]]
+    z = z + [message[3]]
         
     first = False
+    ts = ts[-100:]
     x = x[-100:]
-    dx = dx[-100:]
-    dy = dy[-100:]
-    dz = dz[-100:]
-    
-    px = px[-100:]
-    py = py[-100:]
-    pz = pz[-100:]
+    y = y[-100:]
+    z = z[-100:]
 
-    dxPlot.set_xdata(x)
-    dyPlot.set_xdata(x)
-    dzPlot.set_xdata(x)
+    dxPlot.set_xdata(ts)
+    dyPlot.set_xdata(ts)
+    dzPlot.set_xdata(ts)
 
-    dxPlot.set_ydata(dx)
-    dyPlot.set_ydata(dy)
-    dzPlot.set_ydata(dz)
+    dxPlot.set_ydata(x)
+    dyPlot.set_ydata(y)
+    dzPlot.set_ydata(z)
 
-    axes.set_xlim([x[0],message[0]])
+    axes.set_xlim([ts[0],message[0]])
 
     plt.draw()
     plt.pause(0.0001)
