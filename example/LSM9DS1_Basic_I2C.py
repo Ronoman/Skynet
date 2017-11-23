@@ -43,9 +43,9 @@ class Data():
 		# print("y: ",self.y[-1])
 		# print("z: ",self.z[-1])
 
-	def send(self, sock):
+	def send(self, sock, ip, port):
 		while True:
-			sock.send(str(ts[-1]) + "," + str(self.x[-1]) + "," + str(self.y[-1]) + "," + str(self.z[-1]))
+			sock.sendto(str(self.ts[-1]) + "," + str(self.x[-1]) + "," + str(self.y[-1]) + "," + str(self.z[-1]))
 			time.sleep(0.05)
 
 path = "../lib/liblsm9ds1cwrapper.so"
@@ -153,7 +153,7 @@ if __name__ == "__main__":
         cmx = lib.lsm9ds1_calcMag(imu, mx)
         cmy = lib.lsm9ds1_calcMag(imu, my)
         cmz = lib.lsm9ds1_calcMag(imu, mz)
-        data.update(int(round(time.time()*1000)), cgx, cgy, cgz)
+        data.update(int(round(time.time()*1000)), cgx, cgy, cgz, UDP_IP, UDP_PORT)
         data.send(sock)
         #gyro = b"%d,%f,%f,%f" % (int(round(time.time()*1000)), cgx, cgy, cgz)
         #sock.sendto(gyro, (UDP_IP, UDP_PORT))
