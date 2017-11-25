@@ -55,7 +55,7 @@ gyro = lsm.Gyro()
 with open("output.csv", "w+") as out:
     if __name__ == "__main__":
         while True:
-            while !gyro.gyroAvailable():
+            while not gyro.gyroAvailable():
                 pass
 
             gx = gyro.getGx()
