@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-
-#import ctypes
-from ctypes import *
+import lsm
 import time
 import socket
 from threading import Thread
@@ -48,97 +45,23 @@ class Data():
             sock.sendto(str(self.ts[-1]) + "," + str(self.x[-1]) + "," + str(self.y[-1]) + "," + str(self.z[-1]))
             time.sleep(0.05)
 
-path = "../lib/liblsm9ds1cwrapper.so"
-lib = cdll.LoadLibrary(path)
-
-lib.lsm9ds1_create.argtypes = []
-lib.lsm9ds1_create.restype = c_void_p
-
-lib.lsm9ds1_begin.argtypes = [c_void_p]
-lib.lsm9ds1_begin.restype = None
-
-lib.lsm9ds1_calibrate.argtypes = [c_void_p]
-lib.lsm9ds1_calibrate.restype = None
-
-lib.lsm9ds1_gyroAvailable.argtypes = [c_void_p]
-lib.lsm9ds1_gyroAvailable.restype = c_int
-lib.lsm9ds1_accelAvailable.argtypes = [c_void_p]
-lib.lsm9ds1_accelAvailable.restype = c_int
-lib.lsm9ds1_magAvailable.argtypes = [c_void_p]
-lib.lsm9ds1_magAvailable.restype = c_int
-
-lib.lsm9ds1_readGyro.argtypes = [c_void_p]
-lib.lsm9ds1_readGyro.restype = c_int
-lib.lsm9ds1_readAccel.argtypes = [c_void_p]
-lib.lsm9ds1_readAccel.restype = c_int
-lib.lsm9ds1_readMag.argtypes = [c_void_p]
-lib.lsm9ds1_readMag.restype = c_int
-
-lib.lsm9ds1_getGyroX.argtypes = [c_void_p]
-lib.lsm9ds1_getGyroX.restype = c_float
-lib.lsm9ds1_getGyroY.argtypes = [c_void_p]
-lib.lsm9ds1_getGyroY.restype = c_float
-lib.lsm9ds1_getGyroZ.argtypes = [c_void_p]
-lib.lsm9ds1_getGyroZ.restype = c_float
-
-lib.lsm9ds1_getAccelX.argtypes = [c_void_p]
-lib.lsm9ds1_getAccelX.restype = c_float
-lib.lsm9ds1_getAccelY.argtypes = [c_void_p]
-lib.lsm9ds1_getAccelY.restype = c_float
-lib.lsm9ds1_getAccelZ.argtypes = [c_void_p]
-lib.lsm9ds1_getAccelZ.restype = c_float
-
-lib.lsm9ds1_getMagX.argtypes = [c_void_p]
-lib.lsm9ds1_getMagX.restype = c_float
-lib.lsm9ds1_getMagY.argtypes = [c_void_p]
-lib.lsm9ds1_getMagY.restype = c_float
-lib.lsm9ds1_getMagZ.argtypes = [c_void_p]
-lib.lsm9ds1_getMagZ.restype = c_float
-
-lib.lsm9ds1_calcGyro.argtypes = [c_void_p, c_float]
-lib.lsm9ds1_calcGyro.restype = c_float
-lib.lsm9ds1_calcAccel.argtypes = [c_void_p, c_float]
-lib.lsm9ds1_calcAccel.restype = c_float
-lib.lsm9ds1_calcMag.argtypes = [c_void_p, c_float]
-lib.lsm9ds1_calcMag.restype = c_float
-
-UDP_IP = "10.0.0.242"
+UDP_IP = "10.0.0.242" #Change depending on the network (TODO: read from file)
 UDP_PORT = 1001
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 data = Data()
-# netThread = Thread(target=data.send, args=(sock))
-# netThread.start()
+gyro = lsm.Gyro()
+with open("output.csv", "w+") as out:
+    if __name__ == "__main__":
+        while True:
+            while !gyro.gyroAvailable():
+                pass
 
-if __name__ == "__main__":
-    imu = lib.lsm9ds1_create()
-    lib.lsm9ds1_begin(imu)
-    if lib.lsm9ds1_begin(imu) == 0:
-        print("Failed to communicate with LSM9DS1.")
-        quit()
-    lib.lsm9ds1_calibrate(imu)
+            gx = gyro.getGx()
+            gy = gyro.getGy()
+            gz = gyro.getGz()
 
-    while True:
-        while lib.lsm9ds1_gyroAvailable(imu) == 0:
-            pass
-        lib.lsm9ds1_readGyro(imu)
-        while lib.lsm9ds1_accelAvailable(imu) == 0:
-            pass
-        lib.lsm9ds1_readAccel(imu)
-        while lib.lsm9ds1_magAvailable(imu) == 0:
-            pass
-        lib.lsm9ds1_readMag(imu)
-
-        gx = lib.lsm9ds1_getGyroX(imu)
-        gy = lib.lsm9ds1_getGyroY(imu)
-        gz = lib.lsm9ds1_getGyroZ(imu)
-
-        cgx = lib.lsm9ds1_calcGyro(imu, gx)
-        cgy = lib.lsm9ds1_calcGyro(imu, gy)
-        cgz = lib.lsm9ds1_calcGyro(imu, gz)
-
-        data.update(int(round(time.time()*1000)), cgx, cgy, cgz, UDP_IP, UDP_PORT)
-        data.send(sock)
-        #gyro = b"%d,%f,%f,%f" % (int(round(time.time()*1000)), cgx, cgy, cgz)
-        #sock.sendto(gyro, (UDP_IP, UDP_PORT))
+            data.update(time.time()*1000, gx, gy, gz, UDP_IP, UDP_PORT)
+            data.send(sock)
+            out.write(str(time.time()*1000) + "," + str(gx) + "," + str(gy) + "," + str(gz))

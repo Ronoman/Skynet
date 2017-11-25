@@ -1,4 +1,3 @@
-#Trying Shit out
 import math
 from matplotlib import pyplot as plt
 
