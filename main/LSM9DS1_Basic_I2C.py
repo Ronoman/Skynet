@@ -62,6 +62,6 @@ with open("output.csv", "w+") as out:
             gy = gyro.getGy()
             gz = gyro.getGz()
 
-            data.update(time.time()*1000, gx, gy, gz, UDP_IP, UDP_PORT)
-            data.send(sock)
+            data.update(time.time()*1000, gx, gy, gz)
+            data.send(sock, UDP_IP, UDP_PORT)
             out.write(str(time.time()*1000) + "," + str(gx) + "," + str(gy) + "," + str(gz))
