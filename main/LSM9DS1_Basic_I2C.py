@@ -42,7 +42,7 @@ class Data():
 
     def send(self, sock, ip, port):
         while True:
-            sock.sendto(str(self.ts[-1]) + "," + str(self.x[-1]) + "," + str(self.y[-1]) + "," + str(self.z[-1]))
+            sock.sendto(str(self.ts[-1]) + "," + str(self.x[-1]) + "," + str(self.y[-1]) + "," + str(self.z[-1]), (ip, port))
             time.sleep(0.05)
 
 UDP_IP = "10.0.0.242" #Change depending on the network (TODO: read from file)
