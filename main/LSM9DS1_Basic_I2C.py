@@ -44,7 +44,7 @@ class Data():
         sock.sendto(str(self.ts[-1]) + "," + str(self.x[-1]) + "," + str(self.y[-1]) + "," + str(self.z[-1]), (ip, port))
         time.sleep(0.05)
 
-UDP_IP = "10.0.0.242" #Change depending on the network (TODO: read from file)
+UDP_IP = "10.76.6.90" #Change depending on the network (TODO: read from file)
 UDP_PORT = 1001
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -61,8 +61,9 @@ with open("output.csv", "w+") as out:
             gy = gyro.getGy()
             gz = gyro.getGz()
 
-            print("gz: " + str(gz))
-
             data.update(time.time()*1000, gx, gy, gz)
+
+            print("z: " + str(data.z))
+
             data.send(sock, UDP_IP, UDP_PORT)
             out.write(str(time.time()*1000) + "," + str(gx) + "," + str(gy) + "," + str(gz))
