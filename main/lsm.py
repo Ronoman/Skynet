@@ -68,13 +68,16 @@ class Gyro():
         return (self.lib.lsm9ds1_gyroAvailable(self.imu) == 1)
 
     def getGx(self):
+        self.lib.lsm9ds1_readGyro(self.imu)
         gx = self.lib.lsm9ds1_getGyroX(self.imu)
         return self.lib.lsm9ds1_calcGyro(self.imu, gx)
 
     def getGy(self):
+        self.lib.lsm9ds1_readGyro(self.imu)
         gy = self.lib.lsm9ds1_getGyroX(self.imu)
         return self.lib.lsm9ds1_calcGyro(self.imu, gy)
 
     def getGz(self):
+        self.lib.lsm9ds1_readGyro(self.imu)
         gz = self.lib.lsm9ds1_getGyroX(self.imu)
         return self.lib.lsm9ds1_calcGyro(self.imu, gz)
