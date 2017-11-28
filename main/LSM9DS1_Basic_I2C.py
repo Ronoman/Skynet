@@ -17,7 +17,7 @@ class Data():
 
         self.ts = [time.time()*1000]
 
-    def update(self, dx, dy, dz, ts):
+    def update(self, ts, dx, dy, dz):
         self.dx.append(dx)
         self.dx = self.dx[-100:]
         self.dy.append(dy)
