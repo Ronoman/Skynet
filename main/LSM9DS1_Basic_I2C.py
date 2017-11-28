@@ -15,7 +15,7 @@ class Data():
         self.y = [0, 0]
         self.z = [0, 0]
 
-        self.ts = []
+        self.ts = [time.time()*1000]
 
     def update(self, dx, dy, dz, ts):
         self.dx.append(dx)
