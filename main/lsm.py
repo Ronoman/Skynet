@@ -69,7 +69,7 @@ class Gyro():
         self.gy = 0
         self.gz = 0
 
-        updateThread = Thread(target=updateGyro, args=())
+        updateThread = Thread(target=self.updateGyro, args=())
         updateThread.start()
 
     def gyroAvailable(self):
