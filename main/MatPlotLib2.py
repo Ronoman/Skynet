@@ -26,7 +26,7 @@ dzPlot, = plt.plot(ts, z)
 plt.ion()
 plt.show()
 axes = plt.gca()
-axes.set_ylim([-360,360])
+axes.set_ylim([-90,90])
 
 # i=0
 i = message[0]
@@ -59,7 +59,7 @@ while True:
     dzPlot.set_ydata(z)
 
     axes.set_xlim([ts[0],message[0]])
-
+    print("z: " + str(z[-1]))
     plt.draw()
     plt.pause(0.0001)
 

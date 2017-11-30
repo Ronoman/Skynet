@@ -1,5 +1,6 @@
 from ctypes import *
 import sys
+from threading import Thread
 
 class Gyro():
     def __init__(self):
@@ -64,20 +65,27 @@ class Gyro():
             quit()
         self.lib.lsm9ds1_calibrate(self.imu)
 
+        self.gx = 0
+        self.gy = 0
+        self.gz = 0
+
+        updateThread = Thread(target=updateGyro, args=())
+        updateThread.start()
+
     def gyroAvailable(self):
         return (self.lib.lsm9ds1_gyroAvailable(self.imu) == 1)
 
-    def getGx(self):
+    def updateGyro(self):
         self.lib.lsm9ds1_readGyro(self.imu)
-        gx = self.lib.lsm9ds1_getGyroX(self.imu)
-        return self.lib.lsm9ds1_calcGyro(self.imu, gx)
+        self.gx = self.lib.lsm9ds1_getGyroX(self.imu)
+        self.gy = self.lib.lsm9ds1_getGyroY(self.imu)
+        self.gz = self.lib.lsm9ds1_getGyroZ(self.imu)
+
+    def getGx(self):
+        return gx
 
     def getGy(self):
-        self.lib.lsm9ds1_readGyro(self.imu)
-        gy = self.lib.lsm9ds1_getGyroY(self.imu)
-        return self.lib.lsm9ds1_calcGyro(self.imu, gy)
+        return gy
 
     def getGz(self):
-        self.lib.lsm9ds1_readGyro(self.imu)
-        gz = self.lib.lsm9ds1_getGyroZ(self.imu)
-        return self.lib.lsm9ds1_calcGyro(self.imu, gz)
+        return gz
