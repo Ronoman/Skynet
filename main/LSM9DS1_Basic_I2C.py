@@ -7,13 +7,13 @@ from threading import Thread
 
 class Data():
     def __init__(self):
-        self.dx = [0, 0]
-        self.dy = [0, 0]
-        self.dz = [0, 0]
+        self.dx = []
+        self.dy = []
+        self.dz = []
 
-        self.x = [0, 0]
-        self.y = [0, 0]
-        self.z = [0, 0]
+        self.x = [0]
+        self.y = [0]
+        self.z = [0]
 
         self.ts = [time.time()*1000]
 
