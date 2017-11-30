@@ -63,7 +63,8 @@ with open("output.csv", "w+") as out:
 
             data.update(time.time()*1000, gx, gy, gz)
 
-            print("ts: " + str(data.ts[-1]))
+            print("dx: " + str(data.dz[-1]))
+            print("x: " + str(data.z[-1]))
 
             data.send(sock, UDP_IP, UDP_PORT)
             out.write(str(time.time()*1000) + "," + str(gx) + "," + str(gy) + "," + str(gz))

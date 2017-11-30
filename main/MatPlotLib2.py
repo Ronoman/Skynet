@@ -19,8 +19,8 @@ z = [message[3]]
 
 first = True
 
-dxPlot, = plt.plot(ts, x)
-dyPlot, = plt.plot(ts, y)
+#dxPlot, = plt.plot(ts, x)
+#dyPlot, = plt.plot(ts, y)
 dzPlot, = plt.plot(ts, z)
 
 plt.ion()
@@ -50,9 +50,9 @@ while True:
     #y = y[-100:]
     z = z[-100:]
 
-    dxPlot.set_xdata(ts)
+    #dxPlot.set_xdata(ts)
     #dyPlot.set_xdata(ts)
-    #dzPlot.set_xdata(ts)
+    dzPlot.set_xdata(ts)
 
     #dxPlot.set_ydata(x)
     #dyPlot.set_ydata(y)
