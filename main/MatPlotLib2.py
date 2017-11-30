@@ -51,8 +51,8 @@ while True:
     z = z[-100:]
 
     dxPlot.set_xdata(ts)
-    dyPlot.set_xdata(ts)
-    dzPlot.set_xdata(ts)
+    #dyPlot.set_xdata(ts)
+    #dzPlot.set_xdata(ts)
 
     #dxPlot.set_ydata(x)
     #dyPlot.set_ydata(y)
