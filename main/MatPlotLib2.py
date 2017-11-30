@@ -40,22 +40,22 @@ while True:
     message = [float(x) for x in message]
 
     ts = ts + [message[0]]
-    x = x + [message[1]]
-    y = y + [message[2]]
+    #x = x + [message[1]]
+    #y = y + [message[2]]
     z = z + [message[3]]
 
     first = False
     ts = ts[-100:]
-    x = x[-100:]
-    y = y[-100:]
+    #x = x[-100:]
+    #y = y[-100:]
     z = z[-100:]
 
     dxPlot.set_xdata(ts)
     dyPlot.set_xdata(ts)
     dzPlot.set_xdata(ts)
 
-    dxPlot.set_ydata(x)
-    dyPlot.set_ydata(y)
+    #dxPlot.set_ydata(x)
+    #dyPlot.set_ydata(y)
     dzPlot.set_ydata(z)
 
     axes.set_xlim([ts[0],message[0]])
