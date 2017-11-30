@@ -65,6 +65,6 @@ with open("output.csv", "w+") as out:
 
             #print("dx: " + str(data.dz[-1]))
             #print("x: " + str(data.z[-1]))
-
+            print(gz)
             data.send(sock, UDP_IP, UDP_PORT)
             out.write(str(time.time()*1000) + "," + str(gx) + "," + str(gy) + "," + str(gz))
