@@ -1,5 +1,6 @@
 from ctypes import *
 import sys
+import time
 from threading import Thread
 
 class Gyro():
