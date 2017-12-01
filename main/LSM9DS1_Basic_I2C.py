@@ -60,8 +60,9 @@ with open("output.csv", "w+") as out:
             gx = gyro.getGx()
             gy = gyro.getGy()
             gz = gyro.getGz()
+            ts = gyro.getTs()
 
-            data.update(time.time()*1000, gx, gy, gz)
+            data.update(ts, gx, gy, gz)
 
             #print("dx: " + str(data.dz[-1]))
             #print("x: " + str(data.z[-1]))
