@@ -87,6 +87,8 @@ class Gyro():
             self.gz = self.lib.lsm9ds1_getGyroZ(self.imu)
             self.ts = time.time()*1000
 
+            time.sleep(0.001)
+
     def getGx(self):
         return self.gx
 
