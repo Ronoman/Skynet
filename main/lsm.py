@@ -69,6 +69,7 @@ class Gyro():
         self.gx = 0
         self.gy = 0
         self.gz = 0
+        self.ts = time.time()*1000
 
         updateThread = Thread(target=self.updateGyro, args=())
         updateThread.start()
