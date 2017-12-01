@@ -77,7 +77,7 @@ class Gyro():
 
     def updateGyro(self):
         while True:
-            while lib.lsm9ds1_gyroAvailable(imu) == 0:
+            while self.lib.lsm9ds1_gyroAvailable(self.imu) == 0:
                 pass
             self.lib.lsm9ds1_readGyro(self.imu)
             self.gx = self.lib.lsm9ds1_getGyroX(self.imu)
