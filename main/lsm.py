@@ -83,11 +83,11 @@ class Gyro():
                 pass
             self.lib.lsm9ds1_readGyro(self.imu)
             self.gx = self.lib.lsm9ds1_getGyroX(self.imu)
-            self.cgx = self.lib.lsm9ds1_calcGyro(imu, self.gx)
+            self.cgx = self.lib.lsm9ds1_calcGyro(self.imu, self.gx)
             self.gy = self.lib.lsm9ds1_getGyroY(self.imu)
-            self.cgy = self.lib.lsm9ds1_calcGyro(imu, self.gy)
+            self.cgy = self.lib.lsm9ds1_calcGyro(self.imu, self.gy)
             self.gz = self.lib.lsm9ds1_getGyroZ(self.imu)
-            self.cgz = self.lib.lsm9ds1_calcGyro(imu, self.gz)
+            self.cgz = self.lib.lsm9ds1_calcGyro(self.imu, self.gz)
             self.ts = time.time()*1000
 
             time.sleep(0.001)
