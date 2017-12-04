@@ -67,8 +67,11 @@ class Gyro():
         self.lib.lsm9ds1_calibrate(self.imu)
 
         self.gx = 0
+        self.cgx = 0
         self.gy = 0
+        self.cgy = 0
         self.gz = 0
+        selg.cgz = 0
         self.ts = time.time()*1000
 
         updateThread = Thread(target=self.updateGyro, args=())
