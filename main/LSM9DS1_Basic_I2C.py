@@ -42,7 +42,6 @@ class Data():
 
     def send(self, sock, ip, port):
         sock.sendto(str(self.ts[-1]) + "," + str(self.x[-1]) + "," + str(self.y[-1]) + "," + str(self.z[-1]), (ip, port))
-        time.sleep(0.05)
 
 UDP_IP = "10.76.6.90" #Change depending on the network (TODO: read from file)
 UDP_PORT = 1001
@@ -66,6 +65,7 @@ with open("output.csv", "w+") as out:
 
             #print("dx: " + str(data.dz[-1]))
             #print("x: " + str(data.z[-1]))
-            print("gz: " + str(gz))
+            #print("gz: " + str(gz))
             data.send(sock, UDP_IP, UDP_PORT)
-            out.write(str(time.time()*1000) + "," + str(gx) + "," + str(gy) + "," + str(gz))
+            #out.write(str(time.time()*1000) + "," + str(gx) + "," + str(gy) + "," + str(gz))
+            time.sleep(0.05)
