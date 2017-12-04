@@ -74,6 +74,16 @@ class Gyro():
         self.cgz = 0
         self.ts = time.time()*1000
 
+        self.dx = []
+        self.dy = []
+        self.dz = []
+
+        self.x = [0]
+        self.y = [0]
+        self.z = [0]
+
+        self.ts = [time.time()*1000]
+
         updateThread = Thread(target=self.updateGyro, args=())
         updateThread.start()
 
@@ -86,23 +96,35 @@ class Gyro():
                 pass
             self.lib.lsm9ds1_readGyro(self.imu)
             self.gx = self.lib.lsm9ds1_getGyroX(self.imu)
-            self.cgx = self.lib.lsm9ds1_calcGyro(self.imu, self.gx)
+            self.dx.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gx))
             self.gy = self.lib.lsm9ds1_getGyroY(self.imu)
-            self.cgy = self.lib.lsm9ds1_calcGyro(self.imu, self.gy)
+            self.dy.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gy))
             self.gz = self.lib.lsm9ds1_getGyroZ(self.imu)
-            self.cgz = self.lib.lsm9ds1_calcGyro(self.imu, self.gz)
-            self.ts = time.time()*1000
+            self.dz.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gz))
+            self.ts.append(time.time()*1000)
+
+            self.dx = self.dx[-100:]
+            self.dy = self.dy[-100:]
+            self.dz = self.dz[-100:]
+            self.ts = self.ts[-100:]
+
+            self.x += [self.x[-1] + (self.dx[-1]*(self.ts[-1]-self.ts[-2])/1000)]
+            self.x = self.x[-100:]
+            self.y += [self.y[-1] + (self.dy[-1]*(self.ts[-1]-self.ts[-2])/1000)]
+            self.y = self.y[-100:]
+            self.z += [self.z[-1] + (self.dz[-1]*(self.ts[-1]-self.ts[-2])/1000)]
+            self.z = self.z[-100:]
 
             time.sleep(0.001)
 
-    def getGx(self):
-        return self.cgx
+    def getx(self):
+        return self.x[-1]
 
-    def getGy(self):
-        return self.cgy
+    def gety(self):
+        return self.y[-1]
 
-    def getGz(self):
-        return self.cgz
+    def getz(self):
+        return self.z[-1]
 
     def getTs(self):
-        return self.ts
+        return self.ts[-1]

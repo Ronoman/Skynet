@@ -17,7 +17,7 @@ class Data():
 
         self.ts = [time.time()*1000]
 
-    def update(self, ts, dx, dy, dz):
+    '''def update(self, ts, dx, dy, dz):
         self.dx.append(dx)
         self.dx = self.dx[-100:]
         self.dy.append(dy)
@@ -33,15 +33,15 @@ class Data():
         self.y += [self.y[-1] + (self.dy[-1]*(self.ts[-1]-self.ts[-2])/1000)]
         self.y = self.y[-100:]
         self.z += [self.z[-1] + (self.dz[-1]*(self.ts[-1]-self.ts[-2])/1000)]
-        self.z = self.z[-100:]
+        self.z = self.z[-100:]'''
 
         # print("timestamp: ",[self.ts[-1]])
         # print("x: ",self.x[-1])
         # print("y: ",self.y[-1])
         # print("z: ",self.z[-1])
 
-    def send(self, sock, ip, port):
-        sock.sendto(str(self.ts[-1]) + "," + str(self.x[-1]) + "," + str(self.y[-1]) + "," + str(self.z[-1]), (ip, port))
+    def send(self, data, sock, ip, port):
+        sock.sendto(str(data[0]) + "," + str(data[1]) + "," + str(data[2]) + "," + str(data[3]), (ip, port))
 
 UDP_IP = "10.76.6.103" #Change depending on the network (TODO: read from file)
 UDP_PORT = 1001
@@ -56,16 +56,16 @@ with open("output.csv", "w+") as out:
             while not gyro.gyroAvailable():
                 pass
 
-            gx = gyro.getGx()
-            gy = gyro.getGy()
-            gz = gyro.getGz()
+            x = gyro.getx()
+            y = gyro.gety()
+            z = gyro.getz()
             ts = gyro.getTs()
 
-            data.update(ts, gx, gy, gz)
+            #data.update(ts, gx, gy, gz)
 
             #print("dx: " + str(data.dz[-1]))
             #print("x: " + str(data.z[-1]))
             #print("gz: " + str(gz))
-            data.send(sock, UDP_IP, UDP_PORT)
+            data.send([ts, x, y, z], sock, UDP_IP, UDP_PORT)
             #out.write(str(time.time()*1000) + "," + str(gx) + "," + str(gy) + "," + str(gz))
             time.sleep(0.05)
