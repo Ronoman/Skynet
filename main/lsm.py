@@ -105,4 +105,4 @@ class Gyro():
         return self.cgz
 
     def getTs(self):
-        return self.cts
+        return self.ts
