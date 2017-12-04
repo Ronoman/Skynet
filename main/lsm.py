@@ -127,7 +127,7 @@ class Gyro():
         return self.z[-1]
 
     def getGz(self):
-        return self.gz
+        return self.dz[-1]
 
     def getTs(self):
         return self.ts[-1]
