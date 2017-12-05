@@ -1,6 +1,7 @@
 from ctypes import *
 import sys
 import time
+import math
 from threading import Thread
 
 class Gyro():
@@ -91,17 +92,27 @@ class Gyro():
         return (self.lib.lsm9ds1_gyroAvailable(self.imu) == 1)
 
     def updateGyro(self):
+        lastBad = False
         while True:
             while self.lib.lsm9ds1_gyroAvailable(self.imu) == 0:
                 pass
             self.lib.lsm9ds1_readGyro(self.imu)
             self.gx = self.lib.lsm9ds1_getGyroX(self.imu)
-            self.dx.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gx))
             self.gy = self.lib.lsm9ds1_getGyroY(self.imu)
-            self.dy.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gy))
             self.gz = self.lib.lsm9ds1_getGyroZ(self.imu)
-            self.dz.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gz))
-            self.ts.append(time.time()*1000)
+            if(math.fabs(self.gx - self.dx[-1]) < 150):
+                if(math.fabs(self.gy - self.dy[-1]) < 150):
+                    if(math.fabs(self.gz - self.dz[-1]) < 150):
+                        self.dx.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gx))
+                        self.dy.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gy))
+                        self.dz.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gz))
+                        self.ts.append(time.time()*1000)
+                    else:
+                        continue
+                else:
+                    continue
+            else:
+                continue
 
             self.dx = self.dx[-100:]
             self.dy = self.dy[-100:]
