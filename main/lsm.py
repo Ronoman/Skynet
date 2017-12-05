@@ -100,9 +100,9 @@ class Gyro():
             self.gx = self.lib.lsm9ds1_getGyroX(self.imu)
             self.gy = self.lib.lsm9ds1_getGyroY(self.imu)
             self.gz = self.lib.lsm9ds1_getGyroZ(self.imu)
-            if(math.fabs(self.gx - self.dx[-1]) < 150 || lastBad):
-                if(math.fabs(self.gy - self.dy[-1]) < 150 || lastBad):
-                    if(math.fabs(self.gz - self.dz[-1]) < 150 || lastBad):
+            if(math.fabs(self.gx - self.dx[-1]) < 150 or lastBad):
+                if(math.fabs(self.gy - self.dy[-1]) < 150 or lastBad):
+                    if(math.fabs(self.gz - self.dz[-1]) < 150 or lastBad):
                         self.dx.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gx))
                         self.dy.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gy))
                         self.dz.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gz))
