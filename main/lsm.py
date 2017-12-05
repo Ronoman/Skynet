@@ -75,9 +75,9 @@ class Gyro():
         self.cgz = 0
         self.ts = time.time()*1000
 
-        self.dx = []
-        self.dy = []
-        self.dz = []
+        self.dx = [0]
+        self.dy = [0]
+        self.dz = [0]
 
         self.x = [0]
         self.y = [0]
