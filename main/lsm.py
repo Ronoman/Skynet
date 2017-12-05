@@ -95,6 +95,7 @@ class Gyro():
         lastBad = False
         while True:
             while self.lib.lsm9ds1_gyroAvailable(self.imu) == 0:
+                print("stuck")
                 pass
             print("read")
             self.lib.lsm9ds1_readGyro(self.imu)
