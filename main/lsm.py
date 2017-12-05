@@ -123,6 +123,7 @@ class Gyro():
                     lastBad = True
             else:
                 first = False
+                continue
 
             self.dx = self.dx[-100:]
             self.dy = self.dy[-100:]
