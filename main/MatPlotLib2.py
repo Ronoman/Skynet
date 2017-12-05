@@ -59,7 +59,6 @@ while True:
     dzPlot.set_ydata(z)
 
     axes.set_xlim([ts[0],message[0]])
-    print("z: " + str(z[-1]))
     plt.draw()
     plt.pause(0.0001)
 
