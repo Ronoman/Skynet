@@ -67,6 +67,5 @@ with open("output.csv", "w+") as out:
             #print("x: " + str(data.z[-1]))
             #print("gz: " + str(gz))
             data.send([ts, x, y, z], sock, UDP_IP, UDP_PORT)
-            print("gz: " + str(gyro.getGz()))
             #out.write(str(time.time()*1000) + "," + str(gx) + "," + str(gy) + "," + str(gz))
             time.sleep(0.05)
