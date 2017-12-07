@@ -35,9 +35,10 @@ with open("output.csv", "w+") as out:
             x = gyro.getx()
             y = gyro.gety()
             z = gyro.getz()
-            lastTs = ts
-            if(ts == lastTs): continue #There's no need to graph this data if it is the same point
+
             ts = gyro.getTs()
+            if(ts == lastTs): continue #There's no need to graph this data if it is the same point
+            lastTs = ts
 
             data.send([ts-lastTs, x, y, z], sock, UDP_IP, UDP_PORT)
             #out.write(str(ts) + "," + str(x) + "," + str(y) + "," + str(z))
