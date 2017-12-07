@@ -130,7 +130,7 @@ class Gyro():
             self.z += [self.z[-1] + (self.dz[-1]*(self.ts[-1]-self.ts[-2])/1000)]
             self.z = self.z[-10:]
 
-            time.sleep(0.001)
+            time.sleep(0.0001)
 
     def getx(self):
         return self.x[-1]

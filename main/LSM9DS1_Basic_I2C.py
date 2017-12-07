@@ -55,9 +55,6 @@ ts = 0
 with open("output.csv", "w+") as out:
     if __name__ == "__main__":
         while True:
-            while not gyro.gyroAvailable():
-                pass
-
             x = gyro.getx()
             y = gyro.gety()
             z = gyro.getz()
@@ -71,4 +68,3 @@ with open("output.csv", "w+") as out:
             #print("gz: " + str(gz))
             data.send([ts-lastTs, x, y, z], sock, UDP_IP, UDP_PORT)
             #out.write(str(ts) + "," + str(x) + "," + str(y) + "," + str(z))
-            time.sleep(0.05)
