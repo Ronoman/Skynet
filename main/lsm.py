@@ -90,6 +90,7 @@ class Gyro():
         self.ts = [time.time()*1000]
 
         updateThread = Thread(target=self.updateGyro, args=())
+        updateThread.daemon = True
         updateThread.start()
 
     def gyroAvailable(self):
