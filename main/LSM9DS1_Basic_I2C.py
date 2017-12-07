@@ -51,6 +51,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 data = Data()
 gyro = lsm.Gyro()
 lastTs = 0
+ts = 0
 with open("output.csv", "w+") as out:
     if __name__ == "__main__":
         while True:
