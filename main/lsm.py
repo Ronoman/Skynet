@@ -5,7 +5,7 @@ import math
 from threading import Thread
 
 class Gyro():
-    def __init__(self) -> None:
+    def __init__(self):
         '''
         __init__ is automatically called when the Gyro object is constructed. It's
         purpose is to initialize the gyro library (lsm9ds1), and to instantiate
@@ -92,7 +92,7 @@ class Gyro():
         updateThread = Thread(target=self.updateGyro, args=())
         updateThread.start()
 
-    def gyroAvailable(self) -> bool:
+    def gyroAvailable(self):
         '''
         gyroAvailable determines whether we can read another value from the gyro yet.
         '''
@@ -105,7 +105,7 @@ class Gyro():
         '''
         return (math.fabs(a)<tol and math.fabs(b)<tol and math.fabs(c)<tol)
 
-    def updateGyro(self) -> None:
+    def updateGyro(self):
         '''
         updateGyro is where we get new values from our gyro, and calculate our new
         x, y, and z. Here is the sequence of events:
@@ -156,20 +156,20 @@ class Gyro():
 
             #time.sleep(0.0001)
 
-    def getx(self) -> float:
+    def getx(self):
         '''
         The next 3 functions simply return the most recent gyro value for their
         respective axis.
         '''
         return self.x[-1]
 
-    def gety(self) -> float:
+    def gety(self):
         return self.y[-1]
 
-    def getz(self) -> float:
+    def getz(self):
         return self.z[-1]
 
-    def getGz(self) -> float:
+    def getGz(self):
         '''
         getGz returns the most recent z axis speed, in deg/s
         '''
@@ -178,7 +178,7 @@ class Gyro():
         except IndexError:
             return 0
 
-    def getTs(self) -> float:
+    def getTs(self):
         '''
         getTs returns the most recent timestamp, associated with the most recent
         gyro values.
