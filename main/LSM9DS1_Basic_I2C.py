@@ -63,7 +63,7 @@ with open("output.csv", "w+") as out:
 
             #data.update(ts, gx, gy, gz)
 
-            print("z:\t" + str(z))
+            print("ts: " + str(ts) + "\t\tx: " + str(x) + "\t\ty: " + str(y) + "\t\tz: " + str(z))
             #print("x: " + str(data.z[-1]))
             #print("gz: " + str(gz))
             data.send([ts, x, y, z], sock, UDP_IP, UDP_PORT)
