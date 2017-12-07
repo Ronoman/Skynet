@@ -122,7 +122,7 @@ class Gyro():
         lastBad = False
         first = True
         while True:
-            while not self.gyroAvailable() == 0:
+            while not self.gyroAvailable():
                 pass
             self.lib.lsm9ds1_readGyro(self.imu)
             self.gx = self.lib.lsm9ds1_getGyroX(self.imu) #gx, gy, gz are all raw gyro data
