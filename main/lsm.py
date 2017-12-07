@@ -92,7 +92,7 @@ class Gyro():
         return (self.lib.lsm9ds1_gyroAvailable(self.imu) == 1)
 
     def checkTolerance(self, a, b, c, tol):
-        return (math.fabs(a)<tol || math.fabs(b)<tol || math.fabs(c)<tol)
+        return (math.fabs(a)<tol or math.fabs(b)<tol or math.fabs(c)<tol)
 
     def updateGyro(self):
         lastBad = False
