@@ -118,17 +118,17 @@ class Gyro():
                 first = False
                 continue
 
-            self.dx = self.dx[-100:]
-            self.dy = self.dy[-100:]
-            self.dz = self.dz[-100:]
-            self.ts = self.ts[-100:]
+            self.dx = self.dx[-10:]
+            self.dy = self.dy[-10:]
+            self.dz = self.dz[-10:]
+            self.ts = self.ts[-10:]
 
             self.x += [self.x[-1] + (self.dx[-1]*(self.ts[-1]-self.ts[-2])/1000)]
-            self.x = self.x[-100:]
+            self.x = self.x[-10:]
             self.y += [self.y[-1] + (self.dy[-1]*(self.ts[-1]-self.ts[-2])/1000)]
-            self.y = self.y[-100:]
+            self.y = self.y[-10:]
             self.z += [self.z[-1] + (self.dz[-1]*(self.ts[-1]-self.ts[-2])/1000)]
-            self.z = self.z[-100:]
+            self.z = self.z[-10:]
 
             time.sleep(0.001)
 
