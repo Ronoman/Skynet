@@ -111,14 +111,15 @@ class Gyro():
                             self.ts.append(time.time()*1000)
                             lastBad = False
                         else:
-                            continue
                             lastBad = True
+                            continue
+
                     else:
-                        continue
                         lastBad = True
+                        continue
                 else:
-                    continue
                     lastBad = True
+                    continue
             else:
                 first = False
                 continue
