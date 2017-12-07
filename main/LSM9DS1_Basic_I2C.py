@@ -66,9 +66,9 @@ with open("output.csv", "w+") as out:
 
             #data.update(ts, gx, gy, gz)
 
-            print("dt: " + str(ts - lastTs) + "\t\tx: " + str(x) + "\t\ty: " + str(y) + "\t\tz: " + str(z))
+            # print("dt: " + str(ts - lastTs) + "\t\tx: " + str(x) + "\t\ty: " + str(y) + "\t\tz: " + str(z))
             #print("x: " + str(data.z[-1]))
             #print("gz: " + str(gz))
-            data.send([ts, x, y, z], sock, UDP_IP, UDP_PORT)
-            out.write(str(ts) + "," + str(x) + "," + str(y) + "," + str(z))
+            data.send([ts-lastTs, x, y, z], sock, UDP_IP, UDP_PORT)
+            #out.write(str(ts) + "," + str(x) + "," + str(y) + "," + str(z))
             time.sleep(0.05)

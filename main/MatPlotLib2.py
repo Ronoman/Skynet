@@ -21,12 +21,12 @@ first = True
 
 #dxPlot, = plt.plot(ts, x)
 #dyPlot, = plt.plot(ts, y)
-dzPlot, = plt.plot(ts, z)
+#dzPlot, = plt.plot(ts, z)
 
-plt.ion()
-plt.show()
-axes = plt.gca()
-axes.set_ylim([-90,90])
+#plt.ion()
+#plt.show()
+#axes = plt.gca()
+#axes.set_ylim([-90,90])
 
 # i=0
 i = message[0]
@@ -40,27 +40,28 @@ while True:
     message = [float(x) for x in message]
 
     ts = ts + [message[0]]
-    #x = x + [message[1]]
-    #y = y + [message[2]]
+    x = x + [message[1]]
+    y = y + [message[2]]
     z = z + [message[3]]
 
     first = False
     ts = ts[-100:]
-    #x = x[-100:]
-    #y = y[-100:]
+    x = x[-100:]
+    y = y[-100:]
     z = z[-100:]
 
     #dxPlot.set_xdata(ts)
     #dyPlot.set_xdata(ts)
-    dzPlot.set_xdata(ts)
+    #dzPlot.set_xdata(ts)
 
     #dxPlot.set_ydata(x)
     #dyPlot.set_ydata(y)
-    dzPlot.set_ydata(z)
+    #dzPlot.set_ydata(z)
 
-    axes.set_xlim([ts[0],message[0]])
-    plt.draw()
-    plt.pause(0.0001)
+    #axes.set_xlim([ts[0],message[0]])
+    #plt.draw()
+    #plt.pause(0.0001)
+    print("dt: " + str(ts) + "\t\tx: " + str(x) + "\t\ty: " + str(y) + "\t\tz: " + str(z))
 
 finish = time.time()
 print("Data Time Elapsed: ",(message[0]-i)/1000, "seconds")
