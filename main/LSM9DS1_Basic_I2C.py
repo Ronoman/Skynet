@@ -50,6 +50,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 data = Data()
 gyro = lsm.Gyro()
+lastTs = 0
 with open("output.csv", "w+") as out:
     if __name__ == "__main__":
         while True:
@@ -59,11 +60,12 @@ with open("output.csv", "w+") as out:
             x = gyro.getx()
             y = gyro.gety()
             z = gyro.getz()
+            lastTs = ts
             ts = gyro.getTs()
 
             #data.update(ts, gx, gy, gz)
 
-            print("ts: " + str(ts) + "\t\tx: " + str(x) + "\t\ty: " + str(y) + "\t\tz: " + str(z))
+            print("dt: " + str(ts - lastTs) + "\t\tx: " + str(x) + "\t\ty: " + str(y) + "\t\tz: " + str(z))
             #print("x: " + str(data.z[-1]))
             #print("gz: " + str(gz))
             data.send([ts, x, y, z], sock, UDP_IP, UDP_PORT)
