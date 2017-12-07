@@ -5,7 +5,14 @@ import math
 from threading import Thread
 
 class Gyro():
-    def __init__(self):
+    def __init__(self) -> None:
+        '''
+        __init__ is automatically called when the Gyro object is constructed. It's
+        purpose is to initialize the gyro library (lsm9ds1), and to instantiate
+        the variables that we use later. We also begin communication with the
+        gyro (imu), and start the thread that will read values from the board
+        as quickly as possible.
+        '''
         path = "../lib/liblsm9ds1cwrapper.so"
         self.lib = cdll.LoadLibrary(path)
 
@@ -68,11 +75,8 @@ class Gyro():
         self.lib.lsm9ds1_calibrate(self.imu)
 
         self.gx = 0
-        self.cgx = 0
         self.gy = 0
-        self.cgy = 0
         self.gz = 0
-        self.cgz = 0
         self.ts = time.time()*1000
 
         self.dx = [0]
@@ -88,20 +92,40 @@ class Gyro():
         updateThread = Thread(target=self.updateGyro, args=())
         updateThread.start()
 
-    def gyroAvailable(self):
+    def gyroAvailable(self) -> bool:
+        '''
+        gyroAvailable determines whether we can read another value from the gyro yet.
+        '''
         return (self.lib.lsm9ds1_gyroAvailable(self.imu) == 1)
 
     def checkTolerance(self, a, b, c, tol):
-        return (math.fabs(a)<tol or math.fabs(b)<tol or math.fabs(c)<tol)
+        '''
+        checkTolerance determines if values a, b, and c are all less than the
+        provided tolerance. Not useful other than a helper function to updateGyro
+        '''
+        return (math.fabs(a)<tol and math.fabs(b)<tol and math.fabs(c)<tol)
 
-    def updateGyro(self):
+    def updateGyro(self) -> None:
+        '''
+        updateGyro is where we get new values from our gyro, and calculate our new
+        x, y, and z. Here is the sequence of events:
+
+        1. Loop forever
+        2. Wait until the gyro is ready for a read
+        3. If the gyro values are not within the tolerance, skip this iteration
+        4. Only save the last 10 read values
+        5. Calculte the basic riemann sum
+
+        We want this loop to run as fast as possible, to have the highest
+        precision values we can.
+        '''
         lastBad = False
         first = True
         while True:
-            while self.lib.lsm9ds1_gyroAvailable(self.imu) == 0:
+            while not self.gyroAvailable() == 0:
                 pass
             self.lib.lsm9ds1_readGyro(self.imu)
-            self.gx = self.lib.lsm9ds1_getGyroX(self.imu)
+            self.gx = self.lib.lsm9ds1_getGyroX(self.imu) #gx, gy, gz are all raw gyro data
             self.gy = self.lib.lsm9ds1_getGyroY(self.imu)
             self.gz = self.lib.lsm9ds1_getGyroZ(self.imu)
             if(not first):
@@ -113,39 +137,50 @@ class Gyro():
                     lastBad = False
                 else:
                     lastBad = True
-                    continue
+                    continue #Don't record the point if it is bad
             else:
                 first = False
-                continue
+                continue #Can't do math if this is the first iteration of the loop
 
-            self.dx = self.dx[-10:]
+            self.dx = self.dx[-10:] #Keep the list of points fairly small
             self.dy = self.dy[-10:]
             self.dz = self.dz[-10:]
             self.ts = self.ts[-10:]
 
-            self.x += [self.x[-1] + (self.dx[-1]*(self.ts[-1]-self.ts[-2])/1000)]
+            self.x += [self.x[-1] + (self.dx[-1]*(self.ts[-1]-self.ts[-2])/1000)] #Do a simple riemann sum between the last point and this one
             self.x = self.x[-10:]
             self.y += [self.y[-1] + (self.dy[-1]*(self.ts[-1]-self.ts[-2])/1000)]
             self.y = self.y[-10:]
             self.z += [self.z[-1] + (self.dz[-1]*(self.ts[-1]-self.ts[-2])/1000)]
             self.z = self.z[-10:]
 
-            time.sleep(0.0001)
+            #time.sleep(0.0001)
 
-    def getx(self):
+    def getx(self) -> float:
+        '''
+        The next 3 functions simply return the most recent gyro value for their
+        respective axis.
+        '''
         return self.x[-1]
 
-    def gety(self):
+    def gety(self) -> float:
         return self.y[-1]
 
-    def getz(self):
+    def getz(self) -> float:
         return self.z[-1]
 
-    def getGz(self):
+    def getGz(self) -> float:
+        '''
+        getGz returns the most recent z axis speed, in deg/s
+        '''
         try:
             return self.dz[-1]
         except IndexError:
             return 0
 
-    def getTs(self):
+    def getTs(self) -> float:
+        '''
+        getTs returns the most recent timestamp, associated with the most recent
+        gyro values.
+        '''
         return self.ts[-1]
