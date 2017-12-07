@@ -91,6 +91,9 @@ class Gyro():
     def gyroAvailable(self):
         return (self.lib.lsm9ds1_gyroAvailable(self.imu) == 1)
 
+    def checkTolerance(self, a, b, c, tol):
+        return (math.fabs(a)<tol || math.fabs(b)<tol || math.fabs(c)<tol)
+
     def updateGyro(self):
         lastBad = False
         first = True
@@ -102,21 +105,12 @@ class Gyro():
             self.gy = self.lib.lsm9ds1_getGyroY(self.imu)
             self.gz = self.lib.lsm9ds1_getGyroZ(self.imu)
             if(not first):
-                if(math.fabs(self.gx - self.dx[-1]) < 150 or lastBad):
-                    if(math.fabs(self.gy - self.dy[-1]) < 150 or lastBad):
-                        if(math.fabs(self.gz - self.dz[-1]) < 150 or lastBad):
-                            self.dx.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gx))
-                            self.dy.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gy))
-                            self.dz.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gz))
-                            self.ts.append(time.time()*1000)
-                            lastBad = False
-                        else:
-                            lastBad = True
-                            continue
-
-                    else:
-                        lastBad = True
-                        continue
+                if(self.checkTolerance(self.gx-self.dx[-1], self.gy-self.dy[-1], self.gz-self.dz[-1], 150) or lastBad):
+                    self.dx.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gx))
+                    self.dy.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gy))
+                    self.dz.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gz))
+                    self.ts.append(time.time()*1000)
+                    lastBad = False
                 else:
                     lastBad = True
                     continue

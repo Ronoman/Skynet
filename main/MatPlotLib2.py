@@ -61,7 +61,7 @@ while True:
     #axes.set_xlim([ts[0],message[0]])
     #plt.draw()
     #plt.pause(0.0001)
-    print("dt: " + str(ts) + "\t\tx: " + str(x) + "\t\ty: " + str(y) + "\t\tz: " + str(z))
+    print("dt: " + str(ts[-1]) + "\t\tx: " + str(x[-1]) + "\t\ty: " + str(y[-1]) + "\t\tz: " + str(z[-1]))
 
 finish = time.time()
 print("Data Time Elapsed: ",(message[0]-i)/1000, "seconds")
