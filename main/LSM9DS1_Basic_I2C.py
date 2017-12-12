@@ -40,5 +40,5 @@ with open("output.csv", "w+") as out:
             #if(ts == lastTs): continue #There's no need to graph this data if it is the same point
             lastTs = ts
 
-            data.send([ts-lastTs, x, y, z], sock, UDP_IP, UDP_PORT)
+            data.send([ts, x, y, z], sock, UDP_IP, UDP_PORT)
             out.write(str(ts) + "," + str(x) + "," + str(y) + "," + str(z))
