@@ -42,3 +42,4 @@ with open("output.csv", "w+") as out:
 
             data.send([ts, x, y, z], sock, UDP_IP, UDP_PORT)
             out.write(str(ts) + "," + str(x) + "," + str(y) + "," + str(z))
+            time.sleep(0.05)
