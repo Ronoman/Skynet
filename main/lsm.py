@@ -1,8 +1,8 @@
+from threading import Thread
 from ctypes import *
-import sys
 import time
 import math
-from threading import Thread
+import sys
 
 class Gyro():
     def __init__(self):

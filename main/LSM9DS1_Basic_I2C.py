@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
-import lsm
-import time
-import socket
 from threading import Thread
+import socket
+import time
+import lsm
 
 class Data():
     def __init__(self):
@@ -41,4 +41,4 @@ with open("output.csv", "w+") as out:
             lastTs = ts
 
             data.send([ts-lastTs, x, y, z], sock, UDP_IP, UDP_PORT)
-            #out.write(str(ts) + "," + str(x) + "," + str(y) + "," + str(z))
+            out.write(str(ts) + "," + str(x) + "," + str(y) + "," + str(z))

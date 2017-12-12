@@ -1,9 +1,9 @@
-import math
 from matplotlib import pyplot as plt
-
 import numpy as np
-import time
 import socket
+import math
+import time
+
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind(("", 1001))
 
