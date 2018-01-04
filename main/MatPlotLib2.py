@@ -58,10 +58,14 @@ while True:
     dyPlot.set_ydata(y)
     dzPlot.set_ydata(z)
 
+    plt.text(ts[0], 90, "x: " + str(x[-1]))
+    plt.text(ts[0], 70, "y: " + str(y[-1]))
+    plt.text(ts[0], 50, "z: " + str(z[-1]))
+
     axes.set_xlim([ts[0],message[0]])
     plt.draw()
     plt.pause(0.0001)
-    print("dt: " + str(ts[-1]) + "\t\tx: " + str(x[-1]) + "\t\ty: " + str(y[-1]) + "\t\tz: " + str(z[-1]))
+    #print("dt: " + str(ts[-1]) + "\t\tx: " + str(x[-1]) + "\t\ty: " + str(y[-1]) + "\t\tz: " + str(z[-1]))
 
 finish = time.time()
 print("Data Time Elapsed: ",(message[0]-i)/1000, "seconds")
