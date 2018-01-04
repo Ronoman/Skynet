@@ -20,7 +20,7 @@ class Data():
     def send(self, data, sock, ip, port):
         sock.sendto(str(data[0]) + "," + str(data[1]) + "," + str(data[2]) + "," + str(data[3]), (ip, port))
 
-UDP_IP = "10.76.10.182" #Change depending on the network (TODO: read from file)
+UDP_IP = "10.76.6.24" #Change depending on the network (TODO: read from file)
 UDP_PORT = 1001
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -29,8 +29,16 @@ data = Data()
 gyro = lsm.Gyro()
 lastTs = 0
 ts = 0
+
+max_x = 0
+max_y = 0
+max_z = 0
+
+i = 0
+
 with open("output.csv", "w+") as out:
     if __name__ == "__main__":
+        i += 1
         while True:
             x = gyro.getx()
             y = gyro.gety()
