@@ -18,8 +18,8 @@ class GyroMath(unittest.TestCase):
         self.assertEqual(self.gyro.getTs(), 12, "not returning most recent ts value")
 
     def test_riemann_sum_find_area_correctly(self):
-        self.assertEqual(self.gyro.simpleRiemann(0, 7, 0.5), 3.5, "not riemanning correctly")
-        self.assertEqual(self.gyro.simpleRiemann(4, 3, 1.5), 5.5, "previous value not added correctly")
+        self.assertEqual(self.gyro.simpleRiemann(0, 7.0, 0.5), 3.5, "not riemanning correctly")
+        self.assertEqual(self.gyro.simpleRiemann(4.0, 3.0, 1.5), 5.5, "previous value not added correctly")
 
     def test_tolerance_calculates_correctly(self):
         self.assertTrue(self.gyro.checkTolerance(1, 2, 3, 4), "tolerance throwing out good points")
