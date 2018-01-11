@@ -20,7 +20,7 @@ class Data():
     def send(self, data, sock, ip, port):
         sock.sendto(str(data[0]) + "," + str(data[1]) + "," + str(data[2]) + "," + str(data[3]), (ip, port))
 
-UDP_IP = "10.76.10.182" #Change depending on the network (TODO: read from file)
+UDP_IP = "10.76.6.27" #Change depending on the network (TODO: read from file)
 UDP_PORT = 1001
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
