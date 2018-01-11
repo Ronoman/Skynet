@@ -125,15 +125,10 @@ class Gyro():
         while True:
             while not self.gyroAvailable():
                 pass
-            self.lib.lsm9ds1_readGyro(self.imu)
-            self.gx = self.lib.lsm9ds1_getGyroX(self.imu) #gx, gy, gz are all raw gyro data
-            self.gy = self.lib.lsm9ds1_getGyroY(self.imu)
-            self.gz = self.lib.lsm9ds1_getGyroZ(self.imu)
+            getNewData()
             if(not first):
                 if(self.checkTolerance(self.gx-self.dx[-1], self.gy-self.dy[-1], self.gz-self.dz[-1], 150) or lastBad):
-                    self.dx.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gx))
-                    self.dy.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gy))
-                    self.dz.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gz))
+                    calcGyro()
                     self.ts.append(time.time()*1000)
                     lastBad = False
                 else:
@@ -148,14 +143,41 @@ class Gyro():
             self.dz = self.dz[-10:]
             self.ts = self.ts[-10:]
 
-            self.x += [self.x[-1] + (((self.dx[-1]+self.dx[-2])/2)*(self.ts[-1]-self.ts[-2])/1000)] #Do a simple riemann sum between the last point and this one
+            #self.x += [self.x[-1] + (((self.dx[-1]+self.dx[-2])/2)*(self.ts[-1]-self.ts[-2])/1000)] #Do a simple riemann sum between the last point and this one
+            self.x += [simpleRiemann(self.x[-1], self.dx[-1]+self.dx[-2])/2, (self.ts[-1]-self.ts[-2])/1000]
             self.x = self.x[-10:]
-            self.y += [self.y[-1] + (((self.dy[-1]+self.dy[-2])/2)*(self.ts[-1]-self.ts[-2])/1000)]
+            self.y += [simpleRiemann(self.y[-1], self.dy[-1]+self.dy[-2])/2, (self.ts[-1]-self.ts[-2])/1000]
             self.y = self.y[-10:]
-            self.z += [self.z[-1] + (((self.dz[-1]+self.dz[-2])/2)*(self.ts[-1]-self.ts[-2])/1000)]
+            self.y += [simpleRiemann(self.z[-1], self.dz[-1]+self.dz[-2])/2, (self.ts[-1]-self.ts[-2])/1000]
             self.z = self.z[-10:]
 
             #time.sleep(0.0001)
+
+    def simpleRiemann(self, prev, dy, dx):
+        '''
+        Performs a riemann sum, and adds it to the previous value.
+        '''
+
+        return dy/dx + prev
+
+    def getNewData(self):
+        '''
+        Simply runs the gyro functions, and returns the data received.
+        '''
+
+        self.lib.lsm9ds1_readGyro(self.imu)
+        self.gx = self.lib.lsm9ds1_getGyroX(self.imu) #gx, gy, gz are all raw gyro data
+        self.gy = self.lib.lsm9ds1_getGyroY(self.imu)
+        self.gz = self.lib.lsm9ds1_getGyroZ(self.imu)
+
+    def calcGyro(self):
+        '''
+        Runs the calc_gyro function (library) on each axis
+        '''
+
+        self.dx.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gx))
+        self.dy.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gy))
+        self.dz.append(self.lib.lsm9ds1_calcGyro(self.imu, self.gz))
 
     def getx(self):
         '''

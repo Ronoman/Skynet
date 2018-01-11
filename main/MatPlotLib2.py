@@ -58,9 +58,9 @@ while True:
     dyPlot.set_ydata(y)
     dzPlot.set_ydata(z)
 
-    plt.text(ts[0], 90, "x: " + str(x[-1]))
-    plt.text(ts[0], 70, "y: " + str(y[-1]))
-    plt.text(ts[0], 50, "z: " + str(z[-1]))
+    dxPlot.set_label(str(x[-1]))
+    dyPlot.set_label(str(y[-1]))
+    dzPlot.set_label(str(z[-1]))
 
     axes.set_xlim([ts[0],message[0]])
     plt.draw()
