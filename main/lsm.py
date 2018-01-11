@@ -125,7 +125,7 @@ class Gyro():
         while True:
             while not self.gyroAvailable():
                 pass
-            getNewData()
+            self.getNewData()
             if(not first):
                 if(self.checkTolerance(self.gx-self.dx[-1], self.gy-self.dy[-1], self.gz-self.dz[-1], 150) or lastBad):
                     calcGyro()
