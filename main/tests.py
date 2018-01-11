@@ -3,7 +3,7 @@ import lsm
 
 class GyroMath(unittest.TestCase):
     def setUp(self):
-        self.gyro = Gyro()
+        self.gyro = lsm.Gyro()
 
     def test_return_last_value_of_gyro_data(self):
         self.gyro.x = [1, 2, 3]
