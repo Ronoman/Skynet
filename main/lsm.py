@@ -158,7 +158,7 @@ class Gyro():
         Performs a riemann sum, and adds it to the previous value.
         '''
 
-        return (1.0*dy)/(1.0*dx) + prev #1.0 to assure float division
+        return dy*dx + prev #1.0 to assure float division
 
     def getNewData(self):
         '''
