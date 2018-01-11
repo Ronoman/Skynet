@@ -1,4 +1,5 @@
 import unittest
+import math
 import lsm
 
 class GyroMath(unittest.TestCase):
