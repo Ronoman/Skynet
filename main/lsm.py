@@ -144,11 +144,11 @@ class Gyro():
             self.ts = self.ts[-10:]
 
             #self.x += [self.x[-1] + (((self.dx[-1]+self.dx[-2])/2)*(self.ts[-1]-self.ts[-2])/1000)] #Do a simple riemann sum between the last point and this one
-            self.x += [self.simpleRiemann(self.x[-1], (self.dx[-1]+self.dx[-2])/2, (self.ts[-1]-self.ts[-2])/1000]
+            self.x += [self.simpleRiemann(self.x[-1], (self.dx[-1]+self.dx[-2])/2, (self.ts[-1]-self.ts[-2])/1000)]
             self.x = self.x[-10:]
-            self.y += [self.simpleRiemann(self.y[-1], (self.dy[-1]+self.dy[-2])/2, (self.ts[-1]-self.ts[-2])/1000]
+            self.y += [self.simpleRiemann(self.y[-1], (self.dy[-1]+self.dy[-2])/2, (self.ts[-1]-self.ts[-2])/1000)]
             self.y = self.y[-10:]
-            self.y += [self.simpleRiemann(self.z[-1], (self.dz[-1]+self.dz[-2])/2, (self.ts[-1]-self.ts[-2])/1000]
+            self.y += [self.simpleRiemann(self.z[-1], (self.dz[-1]+self.dz[-2])/2, (self.ts[-1]-self.ts[-2])/1000)]
             self.z = self.z[-10:]
 
             #time.sleep(0.0001)
