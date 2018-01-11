@@ -14,7 +14,7 @@ class GyroMath(unittest.TestCase):
         self.assertEqual(self.gyro.getx(), 3, "not returning most recent x value")
         self.assertEqual(self.gyro.gety(), 6, "not returning most recent y value")
         self.assertEqual(self.gyro.getz(), 9, "not returning most recent z value")
-        self.assertEqual(self.gyro.getts(), 12, "not returning most recent ts value")
+        self.assertEqual(self.gyro.getTs(), 12, "not returning most recent ts value")
 
     def test_riemann_sum_find_area_correctly(self):
         self.assertEqual(self.gyro.simpleRiemann(0, 7, 0.5), 3.5, "not riemanning correctly")
