@@ -2,6 +2,7 @@
 # coding: utf-8
 from threading import Thread
 import socket
+import pigpio
 import time
 import lsm
 
@@ -18,10 +19,16 @@ class Data():
         self.ts = [time.time()*1000]
 
     def send(self, data, sock, ip, port):
-        sock.sendto(str(data[0]) + "," + str(data[1]) + "," + str(data[2]) + "," + str(data[3]), (ip, port))
+        pass
+        #sock.sendto(str(data[0]) + "," + str(data[1]) + "," + str(data[2]) + "," + str(data[3]), (ip, port))
+
+def degToMs(degrees):
+    return (degrees + 90.0)/(180.0) * (2000.0) + 500.0
 
 UDP_IP = "10.76.10.154" #Change depending on the network (TODO: read from file)
 UDP_PORT = 1001
+
+SERVO_PORT = 18
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
@@ -36,13 +43,19 @@ max_z = 0
 
 i = 0
 
+pi = pigpio.pi()
+pi.set_mode(SERVO_PORT, pigpio.OUTPUT)
+
 with open("output.csv", "w+") as out:
     if __name__ == "__main__":
-        i += 1
         while True:
             x = gyro.getx()
             y = gyro.gety()
             z = gyro.getz()
+
+            print(z)
+
+            pi.set_servo_pulsewidth(SERVO_PORT, degToMs(z))
 
             ts = gyro.getTs()
             #if(ts == lastTs): continue #There's no need to graph this data if it is the same point
