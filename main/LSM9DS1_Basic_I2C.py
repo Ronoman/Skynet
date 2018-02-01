@@ -23,7 +23,12 @@ class Data():
         #sock.sendto(str(data[0]) + "," + str(data[1]) + "," + str(data[2]) + "," + str(data[3]), (ip, port))
 
 def degToMs(degrees):
-    return (degrees + 90.0)/(180.0) * (2000.0) + 500.0
+    ret = (degrees + 90.0)/(180.0) * (2000.0) + 500.0
+    if(ret > 2500):
+        ret = 2500
+    elif(ret < 500):
+        ret = 500
+    return ret
 
 UDP_IP = "10.76.10.154" #Change depending on the network (TODO: read from file)
 UDP_PORT = 1001
@@ -53,9 +58,9 @@ with open("output.csv", "w+") as out:
             y = gyro.gety()
             z = gyro.getz()
 
-            print(z)
+            #print(z)
 
-            pi.set_servo_pulsewidth(SERVO_PORT, degToMs(z))
+            pi.set_servo_pulsewidth(SERVO_PORT, degToMs(-z))
 
             ts = gyro.getTs()
             #if(ts == lastTs): continue #There's no need to graph this data if it is the same point
