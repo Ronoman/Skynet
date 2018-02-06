@@ -19,6 +19,9 @@ SERVO_PORT4 = 18
 
 pi = pigpio.pi()
 pi.set_mode(SERVO_PORT1, pigpio.OUTPUT)
+pi.set_mode(SERVO_PORT2, pigpio.OUTPUT)
+pi.set_mode(SERVO_PORT3, pigpio.OUTPUT)
+pi.set_mode(SERVO_PORT4, pigpio.OUTPUT)
 
 while True:
     deg = raw_input("Deg: ")
