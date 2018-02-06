@@ -33,7 +33,9 @@ def degToMs(degrees):
 UDP_IP = "10.76.10.154" #Change depending on the network (TODO: read from file)
 UDP_PORT = 1001
 
-SERVO_PORT = 18
+SERVO_Z = 14
+SERVO_Y = 15
+SERVO_X = 18
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
@@ -49,7 +51,9 @@ max_z = 0
 i = 0
 
 pi = pigpio.pi()
-pi.set_mode(SERVO_PORT, pigpio.OUTPUT)
+pi.set_mode(SERVO_X, pigpio.OUTPUT)
+pi.set_mode(SERVO_Y, pigpio.OUTPUT)
+pi.set_mode(SERVO_Z, pigpio.OUTPUT)
 
 with open("output.csv", "w+") as out:
     if __name__ == "__main__":
@@ -60,7 +64,9 @@ with open("output.csv", "w+") as out:
 
             #print(z)
 
-            pi.set_servo_pulsewidth(SERVO_PORT, degToMs(-z))
+            pi.set_servo_pulsewidth(SERVO_Z, degToMs(-z))
+            pi.set_servo_pulsewidth(SERVO_X, degToMs(-x))
+            pi.set_servo_pulsewidth(SERVO_Y, degToMs(y))
 
             ts = gyro.getTs()
             #if(ts == lastTs): continue #There's no need to graph this data if it is the same point
