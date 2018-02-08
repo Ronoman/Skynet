@@ -7,7 +7,7 @@ import time
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind(("", 1001))
 
-message, address = sock.recvfrom(64)
+message, address = sock.recvfrom(128)
 message = message.decode("utf-8")
 message = message.split(',')
 message = [float(x) for x in message]

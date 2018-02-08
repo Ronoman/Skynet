@@ -109,7 +109,7 @@ class Gyro():
         ret = math.fabs(a)<tol and math.fabs(b)<tol and math.fabs(c)<tol
         if(not ret):
             self.missedPoints += 1
-            print(self.missedPoints)    
+            print(self.missedPoints)
         return True
 
     def updateGyro(self):
@@ -126,20 +126,15 @@ class Gyro():
         We want this loop to run as fast as possible, to have the highest
         precision values we can.
         '''
-        lastBad = False
+
         first = True
         while True:
             while not self.gyroAvailable():
                 pass
             self.getNewData()
             if(not first):
-                if(self.checkTolerance(self.gx-self.dx[-1], self.gy-self.dy[-1], self.gz-self.dz[-1], 150) or lastBad):
-                    self.calcGyro()
-                    self.ts.append(time.time()*1000)
-                    lastBad = False
-                else:
-                    lastBad = True
-                    continue #Don't record the point if it is bad
+                self.calcGyro()
+                self.ts.append(time.time()*1000)
             else:
                 first = False
                 continue #Can't do math if this is the first iteration of the loop
@@ -150,11 +145,18 @@ class Gyro():
             self.ts = self.ts[-10:]
 
             #self.x += [self.x[-1] + (((self.dx[-1]+self.dx[-2])/2)*(self.ts[-1]-self.ts[-2])/1000)] #Do a simple riemann sum between the last point and this one
-            self.x += [self.simpleRiemann(self.x[-1], (self.dx[-1]+self.dx[-2])/2, (self.ts[-1]-self.ts[-2])/1000)]
+            '''self.x += [self.simpleRiemann(self.x[-1], (self.dx[-1]+self.dx[-2])/2, (self.ts[-1]-self.ts[-2])/1000)]
             self.x = self.x[-10:]
             self.y += [self.simpleRiemann(self.y[-1], (self.dy[-1]+self.dy[-2])/2, (self.ts[-1]-self.ts[-2])/1000)]
             self.y = self.y[-10:]
             self.z += [self.simpleRiemann(self.z[-1], (self.dz[-1]+self.dz[-2])/2, (self.ts[-1]-self.ts[-2])/1000)]
+            self.z = self.z[-10:]'''
+
+            self.x += sum(self.dx)/len(self.dx)*self.ts[-1]
+            self.x = self.x[-10:]
+            self.y += sum(self.dy)/len(self.dy)*self.ts[-1]
+            self.y = self.y[-10:]
+            self.z += sum(self.dz)/len(self.dz)*self.ts[-1]
             self.z = self.z[-10:]
 
             #print(self.z)
