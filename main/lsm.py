@@ -89,6 +89,8 @@ class Gyro():
 
         self.ts = [time.time()*1000]
 
+	self.missedPoints = 0
+
         updateThread = Thread(target=self.updateGyro, args=())
         updateThread.daemon = True
         updateThread.start()
@@ -104,7 +106,11 @@ class Gyro():
         checkTolerance determines if values a, b, and c are all less than the
         provided tolerance. Not useful other than a helper function to updateGyro
         '''
-        return (math.fabs(a)<tol and math.fabs(b)<tol and math.fabs(c)<tol)
+        ret = math.fabs(a)<tol and math.fabs(b)<tol and math.fabs(c)<tol
+        if(not ret):
+            self.missedPoints += 1
+            print(self.missedPoints)    
+        return True
 
     def updateGyro(self):
         '''
