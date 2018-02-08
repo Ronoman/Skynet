@@ -77,7 +77,6 @@ class Gyro():
         self.gx = 0
         self.gy = 0
         self.gz = 0
-        self.ts = time.time()*1000
 
         self.dx = [0]
         self.dy = [0]
@@ -89,8 +88,6 @@ class Gyro():
 
         self.ts = [time.time()*1000]
 
-	self.missedPoints = 0
-
         updateThread = Thread(target=self.updateGyro, args=())
         updateThread.daemon = True
         updateThread.start()
@@ -100,17 +97,6 @@ class Gyro():
         gyroAvailable determines whether we can read another value from the gyro yet.
         '''
         return (self.lib.lsm9ds1_gyroAvailable(self.imu) == 1)
-
-    def checkTolerance(self, a, b, c, tol):
-        '''
-        checkTolerance determines if values a, b, and c are all less than the
-        provided tolerance. Not useful other than a helper function to updateGyro
-        '''
-        ret = math.fabs(a)<tol and math.fabs(b)<tol and math.fabs(c)<tol
-        if(not ret):
-            self.missedPoints += 1
-            print(self.missedPoints)
-        return True
 
     def updateGyro(self):
         '''
