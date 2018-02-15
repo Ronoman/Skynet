@@ -24,7 +24,7 @@ pi.set_mode(SERVO_PORT3, pigpio.OUTPUT)
 pi.set_mode(SERVO_PORT4, pigpio.OUTPUT)
 
 while True:
-    deg = raw_input("Deg: ")
+    deg = int(raw_input("Deg: "))
     pi.set_servo_pulsewidth(SERVO_PORT1, degToMs(deg))
     pi.set_servo_pulsewidth(SERVO_PORT2, degToMs(deg))
     pi.set_servo_pulsewidth(SERVO_PORT3, degToMs(deg))
