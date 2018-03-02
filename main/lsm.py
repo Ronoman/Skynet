@@ -130,11 +130,13 @@ class Gyro():
             self.dz = self.dz[-10:]
             self.ts = self.ts[-10:]
 
-            self.x += [sum(self.dx)/len(self.dx)*self.ts[-1]]
+            dt = self.ts[-1] - self.ts[-2]
+
+            self.x += [(sum(self.dx)/len(self.dx))*dt/1000.0 + self.x[-1]]
             self.x = self.x[-10:]
-            self.y += [sum(self.dy)/len(self.dy)*self.ts[-1]]
+            self.y += [(sum(self.dy)/len(self.dy))*dt/1000.0 + self.y[-1]]
             self.y = self.y[-10:]
-            self.z += [sum(self.dz)/len(self.dz)*self.ts[-1]]
+            self.z += [(sum(self.dz)/len(self.dz))*dt/1000.0 + self.z[-1]]
             self.z = self.z[-10:]
 
             #print(self.z)
