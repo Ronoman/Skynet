@@ -12,4 +12,4 @@ class servo():
             ret = 500
         return ret
     def set(degrees):
-        pi.set_servo_pulsewidth(self.servo, degToMs(degrees))
+        pi.set_servo_pulsewidth(self.port, degToMs(degrees))
