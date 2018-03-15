@@ -3,10 +3,10 @@ import servo_class
 import lsm
 
 gyro = lsm.Gyro()
-rAileron = servo_class(14)
-lAileron = servo_class(15)
-stabilator = servo_class(17)
-rudder = servo_class(18)
+rAileron = servo(14)
+lAileron = servo(15)
+stabilator = servo(17)
+rudder = servo(18)
 
 while True:
     x = gyro.getx() #roll, increasing right

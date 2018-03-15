@@ -1,4 +1,9 @@
 #Servo class definition
+from threading import Thread
+import socket
+import pigpio
+import time
+
 class servo():
     def __init__(self, port):
         self.port = port
@@ -12,4 +17,4 @@ class servo():
             ret = 500
         return ret
     def set(degrees):
-        pi.set_servo_pulsewidth(self.servo, degToMs(degrees))
+        pi.set_servo_pulsewidth(self.port, degToMs(degrees))
