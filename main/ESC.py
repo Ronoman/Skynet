@@ -46,17 +46,13 @@ def calibrate():   #This is the auto calibration procedure of a normal ESC
         inp = raw_input()
         if inp == '':            
             pi.set_servo_pulsewidth(ESC, min_value)
-            print "Wierd eh! Special tone"
-            time.sleep(7)
-            print "Wait for it ...."
-            time.sleep (5)
-            print "Im working on it, DONT WORRY JUST WAIT....."
+            print "Set to min value"
             pi.set_servo_pulsewidth(ESC, 0)
             time.sleep(2)
             print "Arming ESC now..."
             pi.set_servo_pulsewidth(ESC, min_value)
             time.sleep(1)
-            print "See.... uhhhhh"
+            print "Swapping to control"
             control() # You can change this to any other function you want
             
 def control(): 
@@ -90,7 +86,7 @@ def control():
 			arm()
 			break	
         else:
-            print "WHAT DID I SAID!! Press a,q,d or e"
+            print "Invalid input"
             
 def arm(): #This is the arming procedure of an ESC 
     print "Connect the battery and press Enter"
@@ -121,4 +117,4 @@ elif inp == "control":
 elif inp == "stop":
     stop()
 else :
-    print "Thank You for not following the things I'm saying... now you gotta restart the program STUPID!!"
+    print "Invalid input"
