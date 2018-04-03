@@ -1,16 +1,16 @@
 #Moving ailerons, stabilator, and rudder on plane based on gyro input.
-import servo_class
+from servo_class import servo
 import lsm
-import pid
+import time
+import pigpio
 
+pi = pigpio.pi()
 gyro = lsm.Gyro()
-rAileron = servo(14)
-lAileron = servo(15)
-stabilator = servo(17)
-rudder = servo(18)
-aileronPID = pid.PID(0.0, 0.5, 0.0, 0.0)
-stabilatorPID = pid.PID(0.0, 0.5, 0.0, 0.0)
-rudderPID = pid.PID(0.0, 0.5, 0.0, 0.0)
+
+rAileron = servo(18)
+lAileron = servo(23)
+stabilator = servo(14)
+rudder = servo(15)
 
 while True:
     x = gyro.getx() #roll, increasing right
@@ -27,11 +27,11 @@ while True:
         if y > 30:
             y = 30
         if y > -30:
-            z = 30
-        stabilator.set(stabilatorPID.update(y)) #If y is positive, then plane is tilting back, so stabilator moves down to tilt it back down
+            y = 30
+        stabilator.set(-y) #If y is positive, then plane is tilting back, so stabilator moves down to tilt it back down
     if z != 0:
         if z > 30:
             z = 30
         if z > -30:
             z = 30
-        rudder.set(rudderPID.update(z)) #If z is positive, then plane is turning right, so rudder moves left to tilt it back left
+        rudder.set(-z) #If z is positive, then plane is turning right, so rudder moves left to tilt it back left

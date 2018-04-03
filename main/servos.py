@@ -14,7 +14,7 @@ def degToMs(degrees):
 
 SERVO_PORT1 = 14
 SERVO_PORT2 = 15
-SERVO_PORT3 = 17
+SERVO_PORT3 = 23
 SERVO_PORT4 = 18
 
 pi = pigpio.pi()

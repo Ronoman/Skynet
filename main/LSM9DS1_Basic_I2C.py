@@ -19,8 +19,7 @@ class Data():
         self.ts = [time.time()*1000]
 
     def send(self, data, sock, ip, port):
-        pass
-        #sock.sendto(str(data[0]) + "," + str(data[1]) + "," + str(data[2]) + "," + str(data[3]), (ip, port))
+        sock.sendto(str(data[0]) + "," + str(data[1]) + "," + str(data[2]) + "," + str(data[3]), (ip, port))
 
 def degToMs(degrees):
     ret = (degrees + 90.0)/(180.0) * (2000.0) + 500.0
@@ -73,5 +72,5 @@ with open("output.csv", "w+") as out:
             lastTs = ts
 
             data.send([ts, x, y, z], sock, UDP_IP, UDP_PORT)
-            out.write(str(ts) + "," + str(x) + "," + str(y) + "," + str(z))
+            #out.write(str(ts) + "," + str(x) + "," + str(y) + "," + str(z))
             time.sleep(0.05)
