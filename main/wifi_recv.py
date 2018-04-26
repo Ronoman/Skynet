@@ -1,4 +1,5 @@
 import socket
+import pigpio
 import os
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
