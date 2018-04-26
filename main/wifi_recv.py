@@ -48,5 +48,5 @@ while True:
         if(float(message[1]) < 0):
             pass
         val = translate(float(message[1]), -0.5, 0.5, SERVO_MIN, SERVO_MAX)
-        pi.set_servo_pulsewidth(SERVO_LEFT, degToMs(val))
-        pi.set_servo_pulsewidth(SERVO_RIGHT, degToMs(-val))
+        pi.set_servo_pulsewidth(SERVO_LEFT, val)
+        pi.set_servo_pulsewidth(SERVO_RIGHT, 2500 - val)
