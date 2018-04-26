@@ -54,5 +54,7 @@ while True:
         if(val > 2500):
             val = 2500
 
+        print(val)
+
         pi.set_servo_pulsewidth(SERVO_LEFT, val)
-        pi.set_servo_pulsewidth(SERVO_RIGHT, 2500 - val)
+        pi.set_servo_pulsewidth(SERVO_RIGHT, 3000 - val)
