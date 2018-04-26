@@ -25,5 +25,5 @@ while True:
     if(float(message) < 0):
         pass
 
-    print("pigs s 12 " + str(translate(message, 0, 0.5, 1000, 2000)))
+    print("pigs s 12 " + str(translate(float(message), 0, 0.5, 1000, 2000)))
     #os.system("pigs s 12 " + str(translate(message, 0, 0.5, 1000, 2000)))
