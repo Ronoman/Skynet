@@ -10,11 +10,11 @@ SERVO_RIGHT = 27
 SERVO_MIN = 500
 SERVO_MAX = 2500
 
+os.system("sudo pigpiod")
+
 pi = pigpio.pi()
 pi.set_mode(SERVO_LEFT, pigpio.OUTPUT)
 pi.set_mode(SERVO_RIGHT, pigpio.OUTPUT)
-
-os.system("sudo pigpiod")
 
 def translate(value, leftMin, leftMax, rightMin, rightMax):
     # Figure out how 'wide' each range is
@@ -32,6 +32,8 @@ while True:
     message, address = sock.recvfrom(1024)
     message = message.decode("utf-8")
     message = message.split(",")
+
+    print(message[0])
 
     if(message[0] == "l_thumb_y"):
         if(float(message[1]) < 0):
