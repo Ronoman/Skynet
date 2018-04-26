@@ -29,6 +29,7 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
 
 while True:
     # i += 1
+    print("Recv'd")
     message, address = sock.recvfrom(1024)
     message = message.decode("utf-8")
     message = message.split(",")
