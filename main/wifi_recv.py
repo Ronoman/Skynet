@@ -5,8 +5,8 @@ import os
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind(("", 1001))
 
-SERVO_LEFT = 23
-SERVO_RIGHT = 24
+SERVO_LEFT = 17
+SERVO_RIGHT = 27
 SERVO_MIN = 500
 SERVO_MAX = 2500
 
