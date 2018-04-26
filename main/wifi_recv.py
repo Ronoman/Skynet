@@ -60,4 +60,4 @@ while True:
         print(val)
 
         pi.set_servo_pulsewidth(SERVO_LEFT, val)
-        pi.set_servo_pulsewidth(SERVO_RIGHT, 3000 - val)
+        pi.set_servo_pulsewidth(SERVO_RIGHT, val)
