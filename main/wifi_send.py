@@ -6,8 +6,7 @@ UDP_PORT = 1001
 
 joy = None
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.connect((UDP_IP, UDP_PORT))
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 joy = joystick.getFirstJoystick()
 print(type(joy))

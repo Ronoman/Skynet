@@ -2,11 +2,8 @@ import socket
 import pigpio
 import os
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.bind(("127.0.0.1", 1001))
-sock.listen(1)
-
-conn, addr = sock.accept()
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock.bind(("", 1001))
 
 SERVO_LEFT = 17
 SERVO_RIGHT = 27
@@ -33,7 +30,7 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
 while True:
     # i += 1
     print("Recv'd")
-    message, address = sock.recv(1024)
+    message, address = sock.recvfrom(1024)
     message = message.decode("utf-8")
     message = message.split(",")
 
