@@ -1,7 +1,7 @@
 import socket
 import time
 import joystick
-UDP_IP = "10.76.6.34" #Change depending on the network (TODO: read from file)
+UDP_IP = "10.76.0.100" #Change depending on the network (TODO: read from file)
 UDP_PORT = 1001
 
 joy = None
