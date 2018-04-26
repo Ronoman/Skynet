@@ -336,6 +336,11 @@ def determine_optimal_sample_rate(joystick=None):
         time.sleep(1.0 / j.probe_frequency)
     print("final probe frequency was %s Hz" % j.probe_frequency)
 
+def getFirstJoystick():
+    joysticks = XInputJoystick.enumerate_devices()
+    device_numbers = list(map(attrgetter('device_number'), joysticks))
+
+    return joysticks[0]
 
 def sample_first_joystick():
     """
