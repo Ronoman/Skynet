@@ -46,8 +46,8 @@ while True:
         if(val > 2000):
             val = 2000
 
-        print("pigs s 12 " + str(val))
-        #os.system("pigs s 12 " + str(translate(message, 0, 0.5, 1000, 2000)))
+        #print("pigs s 12 " + str(val))
+        os.system("pigs s 12 " + str(translate(message, 0, 0.5, 1000, 2000)))
 
     elif(message[0] == "r_thumb_x"):
         val = translate(float(message[1]), -0.5, 0.5, SERVO_MIN, SERVO_MAX)
