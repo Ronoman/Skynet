@@ -33,9 +33,6 @@ while True:
     message = message.decode("utf-8")
     message = message.split(",")
 
-    if(float(message) < 0):
-        pass
-
     if(message[0] == "l_thumb_y"):
         val = translate(float(message[1]), 0, 0.5, 1000, 2000)
 
@@ -48,6 +45,8 @@ while True:
         #os.system("pigs s 12 " + str(translate(message, 0, 0.5, 1000, 2000)))
 
     elif(message[0] == "r_thumb_x"):
+        if(float(message[1]) < 0):
+            pass
         val = translate(float(message[1]), -0.5, 0.5, SERVO_MIN, SERVO_MAX)
         pi.set_servo_pulsewidth(SERVO_LEFT, degToMs(val))
         pi.set_servo_pulsewidth(SERVO_RIGHT, degToMs(-val))
