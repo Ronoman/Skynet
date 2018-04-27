@@ -9,7 +9,7 @@ def print_data(data):
 
 xbee = XBee(serial_port, callback=print_data)
 
-while true:
+while True:
     try:
         time.sleep(0.001)
     except KeyboardInterrupt:
