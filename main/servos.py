@@ -12,10 +12,10 @@ def degToMs(degrees):
         ret = 500
     return ret
 
-SERVO_PORT1 = 14
-SERVO_PORT2 = 15
-SERVO_PORT3 = 23
-SERVO_PORT4 = 18
+SERVO_PORT1 = 17
+SERVO_PORT2 = 23
+SERVO_PORT3 = 24
+SERVO_PORT4 = 27
 
 pi = pigpio.pi()
 pi.set_mode(SERVO_PORT1, pigpio.OUTPUT)
