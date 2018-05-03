@@ -14,14 +14,14 @@ print(type(joy))
 @joy.event
 def on_axis(axis, value):
     print("axis: " +str(axis) + ", val: " + str((value*2)**2))
-    if(axis == "l_thumb_y" or axis == "r_thumb_x"):
+    if(axis == "l_thumb_y" or axis == "r_thumb_x" or axis == "r_thumb_y"):
         sock.sendto(axis + "," + str((value*2)**2), (UDP_IP, UDP_PORT))
 
 @joy.event
 def on_button(button, pressed):
     print("button: " + str(button) + ", pressed: " + str(pressed))
     if(str(button) == "13"):
-        sock.sendto("kill")
+        sock.sendto("kill", (UDP_IP, UDP_PORT))
 
 print("starting loop")
 while True:

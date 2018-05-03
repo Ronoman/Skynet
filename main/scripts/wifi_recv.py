@@ -34,6 +34,7 @@ while True:
     message, address = sock.recvfrom(1024)
     message = message.decode("utf-8")
     if(message == "kill"):
+        #os.system("pigs s 12 1000")
         sys.exit()
     message = message.split(",")
 
