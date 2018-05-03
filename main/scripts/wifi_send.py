@@ -26,4 +26,4 @@ def on_button(button, pressed):
 print("starting loop")
 while True:
     joy.dispatch_events()
-    time.sleep(0.01)
+    time.sleep(0.05)
