@@ -39,7 +39,7 @@ while True:
     if(message[0] == "l_thumb_y"):
         if(float(message[1]) < 0):
             pass
-        val = translate(float(message[1]), 0, 0.5, 1000, 2000)
+        val = translate(float(message[1]), 0, 1, 1000, 2000)
 
         if(val < 1000):
             val = 1000

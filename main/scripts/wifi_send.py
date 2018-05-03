@@ -13,9 +13,9 @@ print(type(joy))
 
 @joy.event
 def on_axis(axis, value):
-    print("axis: " +str(axis) + ", val: " + str(value))
+    print("axis: " +str(axis) + ", val: " + str((value*2)**2))
     if(axis == "l_thumb_y" or axis == "r_thumb_x"):
-        sock.sendto(axis + "," + str(value), (UDP_IP, UDP_PORT))
+        sock.sendto(axis + "," + str((value*2)**2), (UDP_IP, UDP_PORT))
 
 print("starting loop")
 while True:
