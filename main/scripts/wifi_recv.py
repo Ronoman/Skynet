@@ -17,6 +17,7 @@ os.system("sudo pigpiod")
 pi = pigpio.pi()
 pi.set_mode(SERVO_LEFT, pigpio.OUTPUT)
 pi.set_mode(SERVO_RIGHT, pigpio.OUTPUT)
+os.system("pigs s 12 1000")
 
 def translate(value, leftMin, leftMax, rightMin, rightMax):
     # Figure out how 'wide' each range is
@@ -35,7 +36,7 @@ while True:
     message, address = sock.recvfrom(1024)
     message = message.decode("utf-8")
     if(message == "kill"):
-        os.system("pigs s 12 1000")
+        #os.system("pigs s 12 1000")
         sys.exit()
     message = message.split(",")
 
@@ -52,7 +53,7 @@ while True:
             val = 2000
 
         #print("pigs s 12 " + str(val))
-        os.system("pigs s 12 " + str(translate(float(message[1]), 0, 0.5, 1000, 2000)))
+        #os.system("pigs s 12 " + str(translate(float(message[1]), 0, 0.5, 1000, 2000)))
 
     elif(message[0] == "r_thumb_x"):
         val = translate(float(message[1]), -0.5, 0.5, SERVO_MIN, SERVO_MAX)
