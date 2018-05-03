@@ -14,7 +14,7 @@ print(type(joy))
 @joy.event
 def on_axis(axis, value):
     print("axis: " +str(axis) + ", val: " + str((value*2)**2))
-    if(axis == "l_thumb_y" or axis == "r_thumb_y"):
+    if(axis == "l_thumb_y" or axis == "r_thumb_x" or axis == "r_thumb_y"):
         sock.sendto(axis + "," + str((value*2)**2*(value/abs(value))), (UDP_IP, UDP_PORT))
 
 @joy.event
