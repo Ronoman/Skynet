@@ -7,6 +7,7 @@ sock.bind(("", 1001))
 
 SERVO_LEFT = 17
 SERVO_RIGHT = 27
+SERVO_ELEVATOR = 10
 SERVO_MIN = 500
 SERVO_MAX = 2500
 
@@ -32,6 +33,8 @@ while True:
     print("Recv'd")
     message, address = sock.recvfrom(1024)
     message = message.decode("utf-8")
+    if(message == "kill"):
+        sys.exit()
     message = message.split(",")
 
     print(message[0])
@@ -47,7 +50,7 @@ while True:
             val = 2000
 
         #print("pigs s 12 " + str(val))
-        os.system("pigs s 12 " + str(translate(float(message[1]), 0, 0.5, 1000, 2000)))
+        #os.system("pigs s 12 " + str(translate(float(message[1]), 0, 0.5, 1000, 2000)))
 
     elif(message[0] == "r_thumb_x"):
         val = translate(float(message[1]), -0.5, 0.5, SERVO_MIN, SERVO_MAX)
@@ -61,3 +64,12 @@ while True:
 
         pi.set_servo_pulsewidth(SERVO_LEFT, val)
         pi.set_servo_pulsewidth(SERVO_RIGHT, val)
+    elif(message[0] == "r_thumb_y"):
+        val = translate(float(message[1]), -0.5, 0.5, SERVO_MIN, SERVO_MAX)
+
+        if(val < 500):
+            val = 500
+        if(val > 2500):
+            val = 2500
+
+        pi.set_servo_pulsewidth(SERVO_ELEVATOR, val)
