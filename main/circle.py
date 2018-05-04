@@ -64,4 +64,4 @@ while True:
         rudder.set(n) #If z is positive, then plane is turning right, so rudder moves left to tilt it back left
     rollPID.set_setpoint(t*(360/30))
     rollPID.set_setpoint(t*(360/30))
-    rudder.set_setpoint(t*(360/30))
+    rudderPID.set_setpoint(t*(360/30))
