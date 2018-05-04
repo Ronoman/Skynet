@@ -13,7 +13,7 @@ rAileron = servo(18)
 lAileron = servo(23)
 rollPID = pid.PID(0.0, 0.5, 0.0, 0.0)
 stabilator = servo(14)
-stabilatorPID = pid.PID(10.0, 0.5, 0.0, 0.0) #setpoint is 10 degrees for angle of attack
+stabilatorPID = pid.PID(10.0, 1.0, 0.0, 0.0) #setpoint is 10 degrees for angle of attack
 rudder = servo(15)
 rudderPID = pid.PID(0.0, 0.5, 0.0, 0.0)
 
