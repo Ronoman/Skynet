@@ -7,7 +7,7 @@ import pid
 
 pi = pigpio.pi()
 gyro = lsm.Gyro()
-t = 0
+t0 = int(round(time.time() * 1000))
 
 rAileron = servo(18)
 lAileron = servo(23)
@@ -18,6 +18,7 @@ rudder = servo(15)
 rudderPID = pid.PID(0.0, 0.5, 0.0, 0.0)
 
 while True:
+    t = int(round(time.time() * 1000)) - t0
     x = gyro.getx() #roll, increasing right
     y = gyro.gety() #pitch, increasing backward
     z = gyro.getz() #yaw, increasing right
