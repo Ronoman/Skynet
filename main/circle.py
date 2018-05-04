@@ -45,7 +45,7 @@ while True:
         n = rollPID.update(x)
         if n > 30:
             n = 30
-        if n > -30:
+        if n < -30:
             n = -30
         rAileron.set(n) #If x is positive, plane is turning right, so rAileron moves counterclockwise (down) to turn plane back left
         lAileron.set(n) #If servos are mounted mirroring each other, rAileron and lAileron should be set to same thing
@@ -53,14 +53,14 @@ while True:
         n = stabilatorPID.update(y)
         if n > 30:
             n = 30
-        if n > -30:
+        if n < -30:
             n = -30
         stabilator.set(n) #If y is positive, then plane is tilting back, so stabilator moves down to tilt it back down
     if z != rudderPID.setpoint:
         n = rudderPID.update(z)
         if n > 30:
             n = 30
-        if n > -30:
+        if n < -30:
             n = -30
         rudder.set(n) #If z is positive, then plane is turning right, so rudder moves left to tilt it back left
     rollPID.set_setpoint(t*(360/30))
