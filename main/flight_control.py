@@ -10,7 +10,7 @@ gyro = lsm.Gyro()
 
 rAileron = servo(17)
 lAileron = servo(27)
-rollPID = pid.PID(0.0, 0.5, 0.0, 0.0)
+rollPID = pid.PID(0.0, -0.5, 0.0, 0.0)
 stabilator = servo(24)
 stabilatorPID = pid.PID(10.0, 1.0, 0.0, 0.0) #setpoint is 10 degrees for angle of attack
 rudder = servo(23)
