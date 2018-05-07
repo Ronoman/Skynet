@@ -99,5 +99,5 @@ if __name__ == "__main__":
     receiverThread = Thread(target=gyroReceiver, args=())
     receiverThread.daemon = True
 
-    updateThread.start()
+    updaterThread.start()
     receiverThread.start()
