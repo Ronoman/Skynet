@@ -6,9 +6,7 @@ import time
 import math
 
 REMOTE_IP = "192.168.43.100" #Change depending on the network (currently Eli's hotspot)
-REMOTE_PORT = 1001
-
-joy = None
+REMOTE_PORT = 1000
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind(("", 1001)) #For receiving gyro data
