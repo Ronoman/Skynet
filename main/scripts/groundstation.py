@@ -8,15 +8,23 @@ import math
 REMOTE_IP = "192.168.43.100" #Change depending on the network (currently Eli's hotspot)
 REMOTE_PORT = 1000
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-sock.bind(("", 1001)) #For receiving gyro data
+#TODO: Find computer serial port
+xbee = serial.Serial('/dev/ttyS0', 9600, timeout=0.001)
+
+#sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+#sock.bind(("", 1001)) #For receiving gyro data
 
 joy = joystick.getFirstJoystick()
 
 #All matplotlib plotting
 def gyroReceiver():
-    message, address = sock.recvfrom(128)
-    message = message.decode("utf-8")
+    print("Starting gyro receiving")
+    #WiFi
+    #message, address = sock.recvfrom(128)
+    #message = message.decode("utf-8")
+
+    #XBee
+    message = xbee.readline()
     message = message.split(',')
     message = [float(x) for x in message]
 
@@ -39,13 +47,21 @@ def gyroReceiver():
     # i=0
     i = message[0]
     start = time.time()
+    print("Starting gyro loop")
     while True:
         # i += 1
-        message, address = sock.recvfrom(1024)
-        message = message.decode("utf-8")
+
+        #WiFi
+        #message, address = sock.recvfrom(1024)
+        #message = message.decode("utf-8")
+
+        #XBee
+        message = xbee.readline()
         message = message.split(',')
 
-        message = [float(x) for x in message]
+        message = [float(a) for a in message]
+        print(ts)
+        print(x)
 
         ts = ts + [message[0]]
         x = x + [message[1]]
@@ -77,22 +93,33 @@ def gyroReceiver():
 
 #Joystick updater
 def joystickUpdater():
-    joy.dispatch_events()
-    time.sleep(0.05)
+    print("Starting joystick updating")
+    while True:
+        joy.dispatch_events()
+        time.sleep(0.05)
 
 @joy.event
 def on_axis(axis, value):
     print("axis: " +str(axis) + ", val: " + str((value*2)**2))
     if(axis == "l_thumb_y" or axis == "r_thumb_x" or axis == "r_thumb_y"):
-        sock.sendto(axis + "," + str((value*2)**2*(value/abs(value))), (REMOTE_IP, REMOTE_PORT))
+        #WiFi
+        #sock.sendto(axis + "," + str((value*2)**2*(value/abs(value))), (REMOTE_IP, REMOTE_PORT))
+
+        #XBee
+        xbee.write(axis + "," + str((value*2)**2*(value/abs(value))))
 
 @joy.event
 def on_button(button, pressed):
     print("button: " + str(button) + ", pressed: " + str(pressed))
     if(str(button) == "13"):
-        sock.sendto("kill", (REMOTE_IP, REMOTE_PORT))
+        #WiFi
+        #sock.sendto("kill", (REMOTE_IP, REMOTE_PORT))
+
+        #XBee
+        xbee.write("kill")
 
 if __name__ == "__main__":
+    print("Name is in fact main")
     updaterThread = Thread(target=joystickUpdater, args=())
     updaterThread.daemon = True
 
@@ -101,3 +128,4 @@ if __name__ == "__main__":
 
     updaterThread.start()
     receiverThread.start()
+    receiverThread.join()

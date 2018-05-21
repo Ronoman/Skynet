@@ -1,10 +1,13 @@
 import socket
+import serial
 import pigpio
 import sys
 import os
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-sock.bind(("", 1001)) #For receiving command data
+#sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+#sock.bind(("", 1001)) #For receiving command data
+
+xbee = serial.Serial('/dev/ttyS0', 9600, timeout=0.001)
 
 SERVO_LEFT = 17
 SERVO_RIGHT = 27
@@ -37,7 +40,11 @@ class Data():
         self.ts = [time.time()*1000]
 
     def send(self, data, sock, ip, port):
-        sock.sendto(str(data[0]) + "," + str(data[1]) + "," + str(data[2]) + "," + str(data[3]), (ip, port))
+        #WiFi
+        #sock.sendto(str(data[0]) + "," + str(data[1]) + "," + str(data[2]) + "," + str(data[3]), (ip, port))
+
+        #XBee
+        xbee.write(str(data[0]) + "," + str(data[1]) + "," + str(data[2]) + "," + str(data[3]))
 
 def translate(value, leftMin, leftMax, rightMin, rightMax):
     # Figure out how 'wide' each range is
@@ -52,8 +59,9 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
 
 def controlReceiver():
     while True:
-        message, address = sock.recvfrom(1024)
-        message = message.decode("utf-8")
+        #message, address = sock.recvfrom(1024)
+        #message = message.decode("utf-8")
+        message = xbee.readline()
         if(message == "kill"):
             #os.system("pigs s 12 1000")
             sys.exit()
