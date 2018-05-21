@@ -115,9 +115,9 @@ def gyroSender():
 
         #print(z)
 
-        pi.set_servo_pulsewidth(SERVO_Z, degToMs(-z))
-        pi.set_servo_pulsewidth(SERVO_X, degToMs(-x))
-        pi.set_servo_pulsewidth(SERVO_Y, degToMs(y))
+        #pi.set_servo_pulsewidth(SERVO_Z, degToMs(-z))
+        #pi.set_servo_pulsewidth(SERVO_X, degToMs(-x))
+        #pi.set_servo_pulsewidth(SERVO_Y, degToMs(y))
 
         ts = gyro.getTs()
         #if(ts == lastTs): continue #There's no need to graph this data if it is the same point
