@@ -12,6 +12,9 @@ sock.bind(("", 1001)) #For receiving command data
 
 xbee = serial.Serial('/dev/ttyS0', 9600, timeout=0.001)
 
+UDP_IP = 0
+UDP_PORT = 0
+
 SERVO_LEFT = 17
 SERVO_RIGHT = 27
 SERVO_ELEVATOR = 24
