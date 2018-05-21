@@ -4,6 +4,7 @@ import pigpio
 import thread
 import time
 import sys
+import lsm
 import os
 
 #sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
