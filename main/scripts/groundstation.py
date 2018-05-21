@@ -2,6 +2,7 @@ from matplotlib import pyplot as plt
 from threading import Thread
 import joystick
 import socket
+import serial
 import time
 import math
 

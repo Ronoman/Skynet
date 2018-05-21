@@ -72,7 +72,9 @@ def controlReceiver():
             #os.system("pigs s 12 1000")
             sys.exit()
         message = message.split(",")
-
+        if(message[0] == ""):
+            pass
+            
         print(message[0])
 
         if(message[0] == "l_thumb_y"):
