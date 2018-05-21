@@ -1,7 +1,7 @@
+from threading import Thread
 import socket
 import serial
 import pigpio
-import thread
 import time
 import sys
 import lsm
