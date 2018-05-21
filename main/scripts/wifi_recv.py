@@ -1,6 +1,7 @@
 import socket
 import serial
 import pigpio
+import thread
 import sys
 import os
 
@@ -16,11 +17,6 @@ SERVO_MIN = 500
 SERVO_MAX = 2500
 
 os.system("sudo pigpiod")
-
-data = Data()
-gyro = lsm.Gyro()
-lastTs = 0
-ts = 0
 
 pi = pigpio.pi()
 # pi.set_mode(SERVO_LEFT, pigpio.OUTPUT)
@@ -45,6 +41,11 @@ class Data():
 
         #XBee
         xbee.write(str(data[0]) + "," + str(data[1]) + "," + str(data[2]) + "," + str(data[3]))
+
+data = Data()
+gyro = lsm.Gyro()
+lastTs = 0
+ts = 0
 
 def translate(value, leftMin, leftMax, rightMin, rightMax):
     # Figure out how 'wide' each range is
@@ -121,3 +122,15 @@ def gyroSender():
         lastTs = ts
 
         data.send([ts, x, y, z], sock, UDP_IP, UDP_PORT)
+
+if __name__ == "__main__":
+    print("Name is in fact main")
+    receiverThread = Thread(target=controlReceiver, args=())
+    receiverThread.daemon = True
+
+    senderThread = Thread(target=gyroSender, args=())
+    senderThread.daemon = True
+
+    receiverThread.start()
+    senderThread.start()
+    senderThread.join()
