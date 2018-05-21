@@ -7,8 +7,8 @@ import sys
 import lsm
 import os
 
-#sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-#sock.bind(("", 1001)) #For receiving command data
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock.bind(("", 1001)) #For receiving command data
 
 xbee = serial.Serial('/dev/ttyS0', 9600, timeout=0.001)
 
