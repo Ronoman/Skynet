@@ -68,6 +68,7 @@ def controlReceiver():
         #message, address = sock.recvfrom(1024)
         #message = message.decode("utf-8")
         message = xbee.readline()
+        print(message)
         if(message == "kill"):
             #os.system("pigs s 12 1000")
             sys.exit()
@@ -135,11 +136,11 @@ if __name__ == "__main__":
     receiverThread = Thread(target=controlReceiver, args=())
     receiverThread.daemon = True
 
-    senderThread = Thread(target=gyroSender, args=())
-    senderThread.daemon = True
+    #senderThread = Thread(target=gyroSender, args=())
+    #senderThread.daemon = True
 
     receiverThread.start()
-    senderThread.start()
+    #senderThread.start()
 
     while True:
         time.sleep(1)
