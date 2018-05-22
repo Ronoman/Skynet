@@ -73,8 +73,8 @@ def controlReceiver():
             sys.exit()
         message = message.split(",")
         if(message[0] == ""):
-            pass
-            
+            continue
+
         print(message[0])
 
         if(message[0] == "l_thumb_y"):
@@ -140,4 +140,6 @@ if __name__ == "__main__":
 
     receiverThread.start()
     senderThread.start()
-    senderThread.join()
+
+    while True:
+        time.sleep(1)

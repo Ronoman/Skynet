@@ -1,8 +1,8 @@
 from matplotlib import pyplot as plt
 from threading import Thread
+import serial
 import joystick
 import socket
-import serial
 import time
 import math
 
@@ -16,6 +16,7 @@ xbee = serial.Serial('COM3', 9600, timeout=0.001)
 #sock.bind(("", 1001)) #For receiving gyro data
 
 joy = joystick.getFirstJoystick()
+print(joy)
 
 #All matplotlib plotting
 def gyroReceiver():
@@ -27,6 +28,10 @@ def gyroReceiver():
     #XBee
     message = xbee.readline()
     message = message.split(',')
+    print(message)
+    if(message[0].strip(" ") == ""):
+        pass
+
     message = [float(x) for x in message]
 
     ts = [message[0]]
@@ -93,9 +98,10 @@ def gyroReceiver():
         #print("dt: " + str(ts[-1]) + "\t\tx: " + str(x[-1]) + "\t\ty: " + str(y[-1]) + "\t\tz: " + str(z[-1]))
 
 #Joystick updater
-def joystickUpdater():
+def joystickUpdater(joy):
     print("Starting joystick updating")
     while True:
+        print(joy)
         joy.dispatch_events()
         time.sleep(0.05)
 
@@ -121,12 +127,14 @@ def on_button(button, pressed):
 
 if __name__ == "__main__":
     print("Name is in fact main")
-    updaterThread = Thread(target=joystickUpdater, args=())
+    updaterThread = Thread(target=joystickUpdater, args=(joy,))
     updaterThread.daemon = True
 
-    receiverThread = Thread(target=gyroReceiver, args=())
-    receiverThread.daemon = True
+    #receiverThread = Thread(target=gyroReceiver, args=())
+    #receiverThread.daemon = True
 
     updaterThread.start()
-    receiverThread.start()
-    receiverThread.join()
+    while True:
+        time.sleep(1)
+    #receiverThread.start()
+    #receiverThread.join()
