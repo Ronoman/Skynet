@@ -75,7 +75,7 @@ def controlReceiver():
             sys.exit()
         line = line.split("|")
 
-        print(line)
+        #print(line)
 
         for message in line:
             if(message == ""):
@@ -83,7 +83,7 @@ def controlReceiver():
 
             message = message.split(",")
 
-            print(message[0])
+            #print(message[0])
 
             if(message[0] == "l_thumb_y"):
                 if(float(message[1]) < 0):
@@ -106,7 +106,7 @@ def controlReceiver():
                 if(val > 2500):
                     val = 2500
 
-                print(val)
+                #print(val)
 
                 pi.set_servo_pulsewidth(SERVO_LEFT, val)
                 pi.set_servo_pulsewidth(SERVO_RIGHT, val)
