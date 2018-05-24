@@ -101,7 +101,7 @@ def gyroReceiver():
 def joystickUpdater(joy):
     print("Starting joystick updating")
     while True:
-        print(joy)
+        #print(joy)
         joy.dispatch_events()
         time.sleep(0.05)
 

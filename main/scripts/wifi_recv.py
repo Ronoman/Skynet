@@ -68,13 +68,12 @@ def controlReceiver():
         #message, address = sock.recvfrom(1024)
         #message = message.decode("utf-8")
         message = xbee.readline()
-        print(message)
+        if(message == ""):
+            continue
         if(message == "kill"):
             #os.system("pigs s 12 1000")
             sys.exit()
         message = message.split(",")
-        if(message[0] == ""):
-            continue
 
         print(message[0])
 
