@@ -18,8 +18,8 @@ UDP_PORT = 0
 SERVO_LEFT = 17
 SERVO_RIGHT = 27
 SERVO_ELEVATOR = 24
-SERVO_MIN = 500
-SERVO_MAX = 2500
+SERVO_MIN = 1166.66
+SERVO_MAX = 1833.33
 
 os.system("sudo pigpiod")
 
@@ -75,6 +75,8 @@ def controlReceiver():
             sys.exit()
         line = line.split("|")
 
+        print(line)
+
         for message in line:
             if(message == ""):
                 continue
@@ -97,7 +99,7 @@ def controlReceiver():
                 #os.system("pigs s 12 " + str(translate(float(message[1]), 0, 0.5, 1000, 2000)))
 
             elif(message[0] == "r_thumb_x"):
-                val = translate(float(message[1]), -0.5, 0.5, SERVO_MIN, SERVO_MAX)
+                val = translate(float(message[1]), -1, 1, SERVO_MIN, SERVO_MAX)
 
                 if(val < 500):
                     val = 500
@@ -109,7 +111,7 @@ def controlReceiver():
                 pi.set_servo_pulsewidth(SERVO_LEFT, val)
                 pi.set_servo_pulsewidth(SERVO_RIGHT, val)
             elif(message[0] == "r_thumb_y"):
-                val = translate(float(message[1]), -0.5, 0.5, SERVO_MIN, SERVO_MAX)
+                val = translate(float(message[1]), -1, 1, SERVO_MIN, SERVO_MAX)
 
                 if(val < 500):
                     val = 500
