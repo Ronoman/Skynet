@@ -114,7 +114,10 @@ def on_axis(axis, value):
         #sock.sendto(axis + "," + str((value*2)**2*(value/abs(value))), (REMOTE_IP, REMOTE_PORT))
 
         #XBee
-    xbee.write(axis + "," + str((value*2)**2*(value/abs(value))) + "|")
+    try:
+        xbee.write(axis + "," + str((value*2)**2*(value/abs(value))) + "|")
+    except ZeroDivisionError:
+        print("Zero")
 
 @joy.event
 def on_button(button, pressed):
@@ -125,6 +128,11 @@ def on_button(button, pressed):
 
         #XBee
         xbee.write("kill")
+    if(str(button) == "10" and str(pressed) == "1"):
+        xbee.write('rrud')
+    if(str(button) == "9" and str(pressed) == "1"):
+        xbee.write('lrud')
+
 
 if __name__ == "__main__":
     print("Name is in fact main")

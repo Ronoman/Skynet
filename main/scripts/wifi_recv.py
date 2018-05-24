@@ -18,6 +18,7 @@ UDP_PORT = 0
 SERVO_LEFT = 17
 SERVO_RIGHT = 27
 SERVO_ELEVATOR = 24
+SERVO_RUDDER = 18
 SERVO_MIN = 1166.66
 SERVO_MAX = 1833.33
 
@@ -73,6 +74,13 @@ def controlReceiver():
         if(line == "kill"):
             #os.system("pigs s 12 1000")
             sys.exit()
+
+        if(line == "rrud"):
+            pi.set_servo_pulsewidth(SERVO_RUDDER, 1750)
+
+        if(line == "lrud"):
+            pi.set_servo_pulsewidth(SERVO_RUDDER, 1250)
+
         line = line.split("|")
 
         #print(line)
