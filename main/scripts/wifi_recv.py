@@ -10,7 +10,7 @@ import os
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind(("", 1001)) #For receiving command data
 
-xbee = serial.Serial('/dev/ttyS0', 9600, timeout=0.001)
+xbee = serial.Serial('/dev/ttyS0', 115200, timeout=0.001)
 
 UDP_IP = 0
 UDP_PORT = 0
