@@ -122,7 +122,7 @@ def controlReceiver():
                 pi.set_servo_pulsewidth(SERVO_LEFT, val)
                 pi.set_servo_pulsewidth(SERVO_RIGHT, val)
             elif(message[0] == "r_thumb_y"):
-                val = translate(float(message[1]), -1, 1, SERVO_MIN, SERVO_MAX)
+                val = translate(-float(message[1]), -1, 1, SERVO_MIN, SERVO_MAX)
 
                 if(val < 500):
                     val = 500
