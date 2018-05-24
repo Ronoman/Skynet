@@ -67,50 +67,56 @@ def controlReceiver():
     while True:
         #message, address = sock.recvfrom(1024)
         #message = message.decode("utf-8")
-        message = xbee.readline()
-        if(message == ""):
+        line = xbee.readline()
+        if(line == ""):
             continue
-        if(message == "kill"):
+        if(line == "kill"):
             #os.system("pigs s 12 1000")
             sys.exit()
-        message = message.split(",")
+        line = line.split("|")
 
-        print(message[0])
+        for message in line:
+            if(message == ""):
+                continue
 
-        if(message[0] == "l_thumb_y"):
-            if(float(message[1]) < 0):
-                pass
-            val = translate(float(message[1]), 0, 1, 1000, 2000)
+            message = message.split(",")
 
-            if(val < 1000):
-                val = 1000
-            if(val > 2000):
-                val = 2000
+            print(message[0])
 
-            #print("pigs s 12 " + str(val))
-            #os.system("pigs s 12 " + str(translate(float(message[1]), 0, 0.5, 1000, 2000)))
+            if(message[0] == "l_thumb_y"):
+                if(float(message[1]) < 0):
+                    pass
+                val = translate(float(message[1]), 0, 1, 1000, 2000)
 
-        elif(message[0] == "r_thumb_x"):
-            val = translate(float(message[1]), -0.5, 0.5, SERVO_MIN, SERVO_MAX)
+                if(val < 1000):
+                    val = 1000
+                if(val > 2000):
+                    val = 2000
 
-            if(val < 500):
-                val = 500
-            if(val > 2500):
-                val = 2500
+                #print("pigs s 12 " + str(val))
+                #os.system("pigs s 12 " + str(translate(float(message[1]), 0, 0.5, 1000, 2000)))
 
-            print(val)
+            elif(message[0] == "r_thumb_x"):
+                val = translate(float(message[1]), -0.5, 0.5, SERVO_MIN, SERVO_MAX)
 
-            pi.set_servo_pulsewidth(SERVO_LEFT, val)
-            pi.set_servo_pulsewidth(SERVO_RIGHT, val)
-        elif(message[0] == "r_thumb_y"):
-            val = translate(float(message[1]), -0.5, 0.5, SERVO_MIN, SERVO_MAX)
+                if(val < 500):
+                    val = 500
+                if(val > 2500):
+                    val = 2500
 
-            if(val < 500):
-                val = 500
-            if(val > 2500):
-                val = 2500
+                print(val)
 
-            pi.set_servo_pulsewidth(SERVO_ELEVATOR, val)
+                pi.set_servo_pulsewidth(SERVO_LEFT, val)
+                pi.set_servo_pulsewidth(SERVO_RIGHT, val)
+            elif(message[0] == "r_thumb_y"):
+                val = translate(float(message[1]), -0.5, 0.5, SERVO_MIN, SERVO_MAX)
+
+                if(val < 500):
+                    val = 500
+                if(val > 2500):
+                    val = 2500
+
+                pi.set_servo_pulsewidth(SERVO_ELEVATOR, val)
 
 def gyroSender():
     while True:
