@@ -81,6 +81,9 @@ def controlReceiver():
         if(line == "lrud"):
             pi.set_servo_pulsewidth(SERVO_RUDDER, 1250)
 
+        if(line == "zrud"):
+            pi.set_servo_pulsewidth(SERVO_RUDDER, 1500)
+
         line = line.split("|")
 
         #print(line)

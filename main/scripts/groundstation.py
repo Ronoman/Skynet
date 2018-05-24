@@ -133,6 +133,9 @@ def on_button(button, pressed):
     if(str(button) == "9" and str(pressed) == "1"):
         xbee.write('lrud')
 
+    if((str(button) == "10" or str(button) == "9") and str(pressed) == "0"):
+        xbee.write("zrud")
+
 
 if __name__ == "__main__":
     print("Name is in fact main")
