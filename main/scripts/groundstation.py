@@ -1,4 +1,4 @@
-from matplotlib import pyplot as plt
+#from matplotlib import pyplot as plt
 from threading import Thread
 import serial
 import joystick
@@ -10,7 +10,7 @@ REMOTE_IP = "192.168.43.100" #Change depending on the network (currently Eli's h
 REMOTE_PORT = 1000
 
 #TODO: Find computer serial port
-xbee = serial.Serial('COM3', 115200, timeout=0.001)
+xbee = serial.Serial('COM5', 115200, timeout=0.001)
 
 #sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #sock.bind(("", 1001)) #For receiving gyro data
