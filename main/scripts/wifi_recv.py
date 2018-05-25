@@ -71,18 +71,6 @@ def controlReceiver():
         line = xbee.readline()
         if(line == ""):
             continue
-        if(line == "kill"):
-            os.system("pigs s 12 1000")
-            sys.exit()
-
-        if(line == "rrud"):
-            pi.set_servo_pulsewidth(SERVO_RUDDER, 1750)
-
-        if(line == "lrud"):
-            pi.set_servo_pulsewidth(SERVO_RUDDER, 1250)
-
-        if(line == "zrud"):
-            pi.set_servo_pulsewidth(SERVO_RUDDER, 1500)
 
         line = line.split("|")
 
@@ -91,6 +79,19 @@ def controlReceiver():
         for message in line:
             if(message == ""):
                 continue
+
+            if(message == "rrud"):
+                pi.set_servo_pulsewidth(SERVO_RUDDER, 1750)
+
+            if(message == "lrud"):
+                pi.set_servo_pulsewidth(SERVO_RUDDER, 1250)
+
+            if(message == "zrud"):
+                pi.set_servo_pulsewidth(SERVO_RUDDER, 1500)
+
+            if(line == "kill"):
+                os.system("pigs s 12 1000")
+                sys.exit()
 
             message = message.split(",")
 

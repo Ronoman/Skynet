@@ -10,7 +10,7 @@ REMOTE_IP = "192.168.43.100" #Change depending on the network (currently Eli's h
 REMOTE_PORT = 1000
 
 #TODO: Find computer serial port
-xbee = serial.Serial('COM5', 115200, timeout=0.001)
+xbee = serial.Serial('COM3', 115200, timeout=0.001)
 
 #sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #sock.bind(("", 1001)) #For receiving gyro data
@@ -127,14 +127,14 @@ def on_button(button, pressed):
         #sock.sendto("kill", (REMOTE_IP, REMOTE_PORT))
 
         #XBee
-        xbee.write("kill")
+        xbee.write("kill|")
     if(str(button) == "10" and str(pressed) == "1"):
-        xbee.write('rrud')
+        xbee.write('rrud|')
     if(str(button) == "9" and str(pressed) == "1"):
-        xbee.write('lrud')
+        xbee.write('lrud|')
 
     if((str(button) == "10" or str(button) == "9") and str(pressed) == "0"):
-        xbee.write("zrud")
+        xbee.write("zrud|")
 
 
 if __name__ == "__main__":
