@@ -1,5 +1,5 @@
 import serial, time
-ser = serial.Serial('COM3', 9600, timeout=0.001)
+ser = serial.Serial('/dev/ttyS0', 115200, timeout=0.001)
 
 while True:
     #time.sleep(0.1)

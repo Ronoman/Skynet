@@ -72,7 +72,7 @@ def controlReceiver():
         if(line == ""):
             continue
         if(line == "kill"):
-            #os.system("pigs s 12 1000")
+            os.system("pigs s 12 1000")
             sys.exit()
 
         if(line == "rrud"):
@@ -107,7 +107,7 @@ def controlReceiver():
                     val = 2000
 
                 #print("pigs s 12 " + str(val))
-                #os.system("pigs s 12 " + str(translate(float(message[1]), 0, 0.5, 1000, 2000)))
+                os.system("pigs s 12 " + str(translate(float(message[1]), 0, 0.5, 1000, 2000)))
 
             elif(message[0] == "r_thumb_x"):
                 val = translate(float(message[1]), -1, 1, SERVO_MIN, SERVO_MAX)
@@ -122,7 +122,7 @@ def controlReceiver():
                 pi.set_servo_pulsewidth(SERVO_LEFT, val)
                 pi.set_servo_pulsewidth(SERVO_RIGHT, val)
             elif(message[0] == "r_thumb_y"):
-                val = translate(-float(message[1]), -1, 1, SERVO_MIN-1, SERVO_MAX+100)
+                val = translate(-float(message[1]), -1, 1, SERVO_MIN-500, SERVO_MAX+100)
 
                 if(val < 500):
                     val = 500
