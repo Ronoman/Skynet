@@ -89,7 +89,7 @@ def controlReceiver():
             if(message == "zrud"):
                 pi.set_servo_pulsewidth(SERVO_RUDDER, 1500)
 
-            if(line == "kill"):
+            if(message == "kill"):
                 os.system("pigs s 12 1000")
                 sys.exit()
 
