@@ -81,10 +81,10 @@ def controlReceiver():
                 continue
 
             if(message == "rrud"):
-                pi.set_servo_pulsewidth(SERVO_RUDDER, 1750)
+                pi.set_servo_pulsewidth(SERVO_RUDDER, 1650)
 
             if(message == "lrud"):
-                pi.set_servo_pulsewidth(SERVO_RUDDER, 1250)
+                pi.set_servo_pulsewidth(SERVO_RUDDER, 1375)
 
             if(message == "zrud"):
                 pi.set_servo_pulsewidth(SERVO_RUDDER, 1500)
