@@ -1,5 +1,5 @@
 #Moving ailerons, stabilator, and rudder on plane based on gyro input.
-from servo_class import servo
+from servo_class import Servo
 import lsm
 import time
 import pigpio
