@@ -181,6 +181,24 @@ class Gyro():
     def getz(self):
         return self.z[-1]
 
+    def getGx(self):
+        '''
+        getGz returns the most recent z axis speed, in deg/s
+        '''
+        try:
+            return self.dx[-1]
+        except IndexError:
+            return 0
+
+    def getGy(self):
+        '''
+        getGz returns the most recent z axis speed, in deg/s
+        '''
+        try:
+            return self.dy[-1]
+        except IndexError:
+            return 0
+
     def getGz(self):
         '''
         getGz returns the most recent z axis speed, in deg/s
