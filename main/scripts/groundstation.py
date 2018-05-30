@@ -108,7 +108,7 @@ def joystickUpdater(joy):
 @joy.event
 def on_axis(axis, value):
     print("axis: " +str(axis) + ", val: " + str((value*2)**2))
-    if(axis == "l_thumb_y" or axis == "r_thumb_x" or axis == "r_thumb_y" or axis):
+    if(axis == "l_thumb_y" or axis == "r_thumb_x" or axis == "r_thumb_y" or axis == "l_thumb_x"):
         pass
         #WiFi
         #sock.sendto(axis + "," + str((value*2)**2*(value/abs(value))), (REMOTE_IP, REMOTE_PORT))
