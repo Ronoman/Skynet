@@ -20,6 +20,8 @@ while True:
     x = gyro.getx() #roll, increasing right
     y = gyro.gety() #pitch, increasing backward
     z = gyro.getz() #yaw, increasing right
+
+    print(z)
     """if y != 0:
         if y > 30:
             y = 30
