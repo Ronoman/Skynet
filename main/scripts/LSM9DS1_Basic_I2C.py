@@ -29,7 +29,7 @@ def degToMs(degrees):
         ret = 500
     return ret
 
-UDP_IP = "10.76.6.34" #Change depending on the network (TODO: read from file)
+UDP_IP = "192.168.43.1" #Change depending on the network (TODO: read from file)
 UDP_PORT = 1001
 
 SERVO_Z = 14
