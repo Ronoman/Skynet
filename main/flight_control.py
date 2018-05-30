@@ -21,7 +21,7 @@ while True:
     y = gyro.gety() #pitch, increasing backward
     z = gyro.getz() #yaw, increasing right
 
-    print(z)
+    print(y)
     """if y != 0:
         if y > 30:
             y = 30
