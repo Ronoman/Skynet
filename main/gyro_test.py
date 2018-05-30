@@ -3,9 +3,9 @@ import lsm
 gyro = lsm.Gyro()
 
 while True:
-    x = gyro.getGx()
+    x = gyro.getx()
     y = gyro.gety()
-    z = gyro.getz()
+    z = gyro.getGz()
     ts = gyro.getTs()
 
-    print("dx: " + str(x) + "\t\tts: " + str(ts))
+    print("dz: " + str(z) + "\t\tts: " + str(ts))
