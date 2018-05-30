@@ -8,4 +8,4 @@ while True:
     z = gyro.getGz()
     ts = gyro.getTs()
 
-    print("dx: " + str(z) + "\t\tts: " + str(ts))
+    print("dx: " + str(x) + "\t\tts: " + str(ts))
