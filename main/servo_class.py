@@ -6,7 +6,7 @@ import time
 
 pi = pigpio.pi()
 
-class servo():
+class Servo():
     def __init__(self, port):
         self.port = port
         pi.set_mode(port, pigpio.OUTPUT)

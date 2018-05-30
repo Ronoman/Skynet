@@ -3,18 +3,18 @@ from servo_class import servo
 import lsm
 import time
 import pigpio
-import pid
+from pid import PID
 
 pi = pigpio.pi()
 gyro = lsm.Gyro()
 
-rAileron = servo(17)
-lAileron = servo(27)
-rollPID = pid.PID(0.0, -0.5, 0.0, 0.0)
-stabilator = servo(24)
-stabilatorPID = pid.PID(10.0, 1.0, 0.0, 0.0) #setpoint is 10 degrees for angle of attack
-rudder = servo(23)
-rudderPID = pid.PID(0.0, 0.5, 0.0, 0.0)
+rAileron = Servo(17)
+lAileron = Servo(27)
+rollPID = PID(0.0, -0.5, 0.0, 0.0)
+stabilator = Servo(24)
+stabilatorPID = PID(10.0, 1.0, 0.0, 0.0) #setpoint is 10 degrees for angle of attack
+rudder = Servo(23)
+rudderPID = PID(0.0, 0.5, 0.0, 0.0)
 
 while True:
     x = gyro.getx() #roll, increasing right

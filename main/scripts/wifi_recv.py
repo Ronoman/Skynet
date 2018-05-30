@@ -90,7 +90,7 @@ def controlReceiver():
                 pi.set_servo_pulsewidth(SERVO_RUDDER, 1500)
 
             if(message == "kill"):
-                os.system("pigs s 12 1000")
+                #os.system("pigs s 12 1000")
                 sys.exit()
 
             message = message.split(",")
@@ -108,7 +108,7 @@ def controlReceiver():
                     val = 2000
 
                 print("pigs s 12 " + str(val))
-                os.system("pigs s 12 " + str(translate(float(message[1]), 0, 0.5, 1000, 2000)))
+                #os.system("pigs s 12 " + str(translate(float(message[1]), 0, 0.5, 1000, 2000)))
 
             elif(message[0] == "r_thumb_x"):
                 val = translate(float(message[1]), 1, -1, SERVO_MIN, SERVO_MAX)
@@ -155,8 +155,8 @@ if __name__ == "__main__":
     receiverThread = Thread(target=controlReceiver, args=())
     receiverThread.daemon = True
 
-    #senderThread = Thread(target=gyroSender, args=())
-    #senderThread.daemon = True
+    senderThread = Thread(target=gyroSender, args=())
+    senderThread.daemon = True
 
     receiverThread.start()
     #senderThread.start()
